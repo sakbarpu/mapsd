@@ -34,7 +34,7 @@ num_users_no_repos = 0
 num_users_no_descs = 0
 
 users = open(user_file) #users file to read
-for i in range(start_users): users.next()
+for i in range(start_users): users.readline()
 
 start_time = time.time() #time
 mapsd = {} #data to store (a dict for each user and info)
