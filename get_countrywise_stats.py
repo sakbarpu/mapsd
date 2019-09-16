@@ -66,19 +66,29 @@ for cc in actual_countrycodes:
 
 #load state codes for US states
 us_state_codes = [x.lower() for x in open("../data/us_states/state_codes.txt").read().split("\n")]
+us_state_names = [x.lower() for x in open("../data/us_states/state_names.txt").read().split("\n")]
 
 #load cities database ~25000 cities
 #(cityname,countryname,subcountryname)
-cities = [x.lower() for x in open("../world-cities/data/world-cities.csv").read().split("\n")]
+cities = [x.lower() for x in open("../world-cities/data/world-cities.csv").read().strip().split("\n")]
 cities = [x.split(",")[:-1] for x in cities[1:]]
 mapping_countries_incitiesdatabase_to_actual_codes = {}
 for city_entry in cities:
-	print (city_entry)
 	city_country = city_entry[1]
 	if city_country in actual_countrynames_in_en:
-		print (city_country)
-exit()
+		mapping_countries_incitiesdatabase_to_actual_codes[city_country] = actual_countrycodes[actual_countrynames_in_en.index(city_country)]
 
+#add more city entries with US state names replaced with codes
+cities_to_add = []
+for city_ in cities:
+	if city_[1] == "united states":
+		if city_[2] == '"washington':
+			new_entry = [city_[0],city_[1],"DC"]
+		else:
+			new_entry = [city_[0],city_[1],us_state_codes[us_state_names.index(city_[2])]]
+		cities_to_add.append(new_entry)
+
+for city_ in cities_to_add: cities.append(city_)
 
 #loop over extracted country names to try to identify them
 #in the list of actual country names
@@ -93,9 +103,11 @@ string that we get from the github tags.
 
 First split the string by comma separator. 
 
+(solid logic)
 For each substring check if it is a country name in english. 
 If yes then success.
 
+(solid logic)
 If not then search in any of the other ~620 languages. 
 If a substring is found as a country name in any of the other 
 languages then success. 
@@ -105,7 +117,7 @@ If not then search for a substring in the 3 letter codes for
 countries. If a substring is present in the 3 letter codes for 
 countries we have found the country and success. 
 
-(very wishy washy logic)
+(very wishy washy logic, ignore it may be)
 If not then see if the location tag as present is comma 
 separated and one of the substrings in this comma separated 
 string is the code of a US state. If it is then the country 
@@ -119,6 +131,9 @@ multipart comma separated, then match parts with the three
 things associated with each entry in the cities database. If
 at least two of them match then success and we have found
 the country name.
+
+(more wishy washy logics to be put in place as well)
+see below in todos
 
 '''
 
@@ -153,18 +168,20 @@ for x in countrywise.keys():
 				#print (x)
 				break
 
-	#Example: (1) San Francisco Bay Area, CA (2) Athens, GA (3) Stanford, CA (4) Hillsboro, OR (5) Bangalore, IN
-	if success == False: #if above straightforward looking for country names in the different language database does not work
-		if len(x_split) > 1: #look at US state names
-			for n in x_split:
-				n = n.strip().lower().replace(".","")
-				if n in us_state_codes:
-					c+=1
-					final_data['US'].append(countrywise[x])	
-					success == True
-					#print (x)
-					break
-	#Example: (1)
+#	#Example: (1) San Francisco Bay Area, CA (2) Athens, GA (3) Stanford, CA (4) Hillsboro, OR (5) Bangalore, IN
+#	if success == False: #if above straightforward looking for country names in the different language database does not work
+#		if len(x_split) > 1: #look at US state names
+#			for n in x_split:
+#				n = n.strip().lower().replace(".","")
+#				if n in us_state_codes:
+#					c+=1
+#					final_data['US'].append(countrywise[x])	
+#					success == True
+#					#print (x)
+#					break
+
+	#Example: (1) Hyderabad ,Telangana (2) Utrecht, The Netherlands (3) Sunnyvale, CA (4) East Palo Alto, California 
+	#(5) São Paulo,SP - Brasil (6) Chamba, Himachal Pradesh (7) Beijing, P.R.China
 	if success == False: #look into the cities database
 		if len(x_split) > 1:
 			x_split = [x.strip().lower() for x in x_split]
@@ -174,22 +191,64 @@ for x in countrywise.keys():
 					for a2 in city_entry: 
 						if a1 == a2: 
 							count_match+=1
-							#break
-					
+				#The entries much match in at least two locations	
 				if count_match >= 2:
 					c+=1
 					final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]].append(countrywise[x])
 					success = True
 					break
+	
+	#Example: (1) istanbul (2) karachi (3) paris
+	#TODO: Get the top 1000 cities in the world and map their names to their respective countries
+	#This is based on the fact that those cities are so famous that mostly people living there refer to their location as their city and ignore the country info
 
-	#if success == False: print (x)
+
+	#Example: (1) London, UK (2) Shenzhen, CN (3) Raleigh, US (4) Bangalore, IN (5) Dunedin, NZ 
+	#TODO: Some people like to abbreviate country names in 2 letters code
+	#Replace in the world-cities csv file country names by 2 letters code
+	#Check if the string presented is there in that database
+
+	#Example: (1) Vancouver, B.C. (2) Toronto, OR (3) Vancouver, BC (4) Burnaby, BC (5) Montreal, QC
+	#TODO: People in Canada has a habit of abbreviating province names as well.
+	#Create a database of list of provinces of canada and codes
+	#Replace the province names by codes in world-cities database
+	#Check if there is a entry in that database for the string we have 
+
+	#Example: (1) Wrocław Poland (2) Westford MA (3) Seattle WA (4) Guangzhou China (5) Espírito Santo - Brasil
+	#(6) Hefei China (7) Cambridge UK (8) Aurora CO (9) Quito - Ecuador (10) London UK
+ 	#People sometimes will not put comma separator in the string to separate city and country names or city and subcountry names
+	#Separate the string using space separator. Remove any special symbols in the string.
+	#Then search for the substrings in the world-cities database
+
+	#Example: (1) Purdue University (2) Facebook HQ
+	#TODO: Names of organizations to be mapped to their respective countries. 
+	#Look for a database where universities are mapped to country names. 
+	#Look for another database where companies (especially software companies) are mapped to their respective databases.
+
+
+
+	if success == False: print (x)
 
 print ("\n")		
 #print (final_data.keys())
 #print (final_data['US'])
-#print (final_data['AL'])
 print (c, " countries out of ", len(countrywise.keys()), " entries identified")
 
+
+#TODO: Flatten the final_data out
+
+#Right now it has following format. There is a key for a
+#country code. Inside that key are values as a list. This
+#list has many lists. Each of these lists has information
+#about [[many commits], [many langs], [many reponames], [many
+#repodescs]]. For each country code we have many of the
+#above lists. We need to flatten this list so that we
+#have just one list of the above format for each country
+#code.
+
 print ("Done in time:" , time.time()-start_time)
+
+
+
 
 
