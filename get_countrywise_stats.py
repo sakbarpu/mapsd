@@ -227,11 +227,9 @@ for x in countrywise.keys():
 
 
 
-	if success == False: print (x)
+	#if success == False: print (x)
 
 print ("\n")		
-#print (final_data.keys())
-#print (final_data['US'])
 print (c, " countries out of ", len(countrywise.keys()), " entries identified")
 
 
@@ -246,9 +244,38 @@ print (c, " countries out of ", len(countrywise.keys()), " entries identified")
 #have just one list of the above format for each country
 #code.
 
+print (list(final_data.keys()))
+total_commits = 0
+total_langs = 0
+total_reponames = 0
+total_repodescs = 0
+for country_code in final_data.keys():
+	country_data = final_data[country_code]
+
+	country_commits = []
+	country_langs = []
+	country_reponames = []
+	country_repodescs = []
+	for entry in country_data:
+		country_commits.extend(entry[0])
+		country_langs.extend(entry[1])
+		country_reponames.extend(entry[2])
+		country_repodescs.extend(entry[3])
+
+	print (country_code,end=' ')
+	#print (country_commits)
+	#print (country_langs)
+	#print (country_reponames)
+	#print (country_repodescs)
+	print (len(country_commits),end=' ')
+	print (len(country_langs),end=' ')
+	print (len(country_reponames),end=' ')
+	print (len(country_repodescs))
+	total_commits+=len(country_commits)
+	total_langs+=len(country_langs)
+	total_reponames+=len(country_reponames)
+	total_repodescs+=len(country_repodescs)
+
+print ("TOT", total_commits, total_langs, total_reponames, total_repodescs)
 print ("Done in time:" , time.time()-start_time)
-
-
-
-
 
