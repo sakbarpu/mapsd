@@ -11,10 +11,11 @@ import sys, os
 import re
 import time, datetime
 from iso3166 import countries
+from collections import Counter
 
 mapsd_file = sys.argv[1] #where is user file
 out_dir = sys.argv[2] #which dir to save output
-out_file = os.path.join(out_dir, "countrywise_" + mapsd_file)
+out_file = os.path.join(out_dir, "countrywise_" + os.path.basename(mapsd_file))
 if os.path.exists(out_file):
 	print ("Out file already there. Check if this batch is done already. Or remove the file and restart process")
 	exit()
@@ -63,6 +64,7 @@ for cc in actual_countrycodes:
 	if cc not in countries: 
 		continue
 	actual_countrycodes_3letter[countries.get(cc.lower()).alpha3] = cc
+actual_countrycodes_3letter["ACI"] = "AC"
 
 #load state codes for US states
 us_state_codes = [x.lower() for x in open("../data/us_states/state_codes.txt").read().split("\n")]
@@ -136,8 +138,12 @@ the country name.
 see below in todos
 
 '''
-
+progress_counter = 0
 for x in countrywise.keys():
+
+	if progress_counter%100 == 0: print (progress_counter, "/", len(countrywise.keys()))
+	progress_counter+=1
+
 	success = False
 	x_split = x.strip().split(",") #if location tag is comma separated
 	if success == False:
@@ -229,13 +235,12 @@ for x in countrywise.keys():
 
 	#if success == False: print (x)
 
-print ("\n")		
+#print ("\n")		
 print (c, " countries out of ", len(countrywise.keys()), " entries identified")
 
 
-#TODO: Flatten the final_data out
-
-#Right now it has following format. There is a key for a
+#Flatten the final_data out
+#Up until now it has following format. There is a key for a
 #country code. Inside that key are values as a list. This
 #list has many lists. Each of these lists has information
 #about [[many commits], [many langs], [many reponames], [many
@@ -244,38 +249,39 @@ print (c, " countries out of ", len(countrywise.keys()), " entries identified")
 #have just one list of the above format for each country
 #code.
 
-print (list(final_data.keys()))
+#print (list(final_data.keys()))
 total_commits = 0
-total_langs = 0
-total_reponames = 0
-total_repodescs = 0
-for country_code in final_data.keys():
-	country_data = final_data[country_code]
+with open(out_file, "w") as out_f:
+	out_f.write("Code1 \t Code2 \t Name \t #Developers \t #Commits \t #Languages\n")
+	for country_code in final_data.keys():
+		country_data = final_data[country_code]
 
-	country_commits = []
-	country_langs = []
-	country_reponames = []
-	country_repodescs = []
-	for entry in country_data:
-		country_commits.extend(entry[0])
-		country_langs.extend(entry[1])
-		country_reponames.extend(entry[2])
-		country_repodescs.extend(entry[3])
+		country_commits = []
+		country_langs = []
+		country_reponames = []
+		country_repodescs = []
+		for entry in country_data:
+			country_commits.extend(entry[0])
+			country_langs.extend([item for sublist in [x.split(",") for x in entry[1]] for item in sublist])
+			country_reponames.extend([x.split(",") for x in entry[2]])
+			country_repodescs.extend([x.split(";;;") for x in entry[3]])
+		
+		total_commits+=len(country_commits)
 
-	print (country_code,end=' ')
-	#print (country_commits)
-	#print (country_langs)
-	#print (country_reponames)
-	#print (country_repodescs)
-	print (len(country_commits),end=' ')
-	print (len(country_langs),end=' ')
-	print (len(country_reponames),end=' ')
-	print (len(country_repodescs))
-	total_commits+=len(country_commits)
-	total_langs+=len(country_langs)
-	total_reponames+=len(country_reponames)
-	total_repodescs+=len(country_repodescs)
+		country_commits = [int(x) for x in country_commits]
+		country_langs = Counter(country_langs).most_common()
 
-print ("TOT", total_commits, total_langs, total_reponames, total_repodescs)
+		if country_code.lower() == "ac": alpha3code = "ACIS"
+		elif country_code.lower() == "ic": alpha3code = "CAIS"
+		elif country_code.lower() == "ea": alpha3code = "CMEA"
+		elif country_code.lower() == "dg": alpha3code = "DGCA"
+		elif country_code.lower() == "xa": alpha3code = "FGXA"
+		elif country_code.lower() == "xb": alpha3code = "FGXB"
+		elif country_code.lower() == "ta": alpha3code = "TDCU"
+		elif country_code.lower() == '': continue
+		else: alpha3code = str(countries.get(country_code.lower()).alpha3)
+
+		out_f.write(str(country_code) + "\t" + str(alpha3code) + "\t" + str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + str(len(country_commits)) + "\t" + str(sum(country_commits)) + "\t" + ",".join([str(x) +":"+ str(y) for x,y in country_langs]) + "\n")
+
+print ("TOT", total_commits)
 print ("Done in time:" , time.time()-start_time)
-
