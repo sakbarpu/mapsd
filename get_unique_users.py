@@ -3,7 +3,7 @@ Read all the actorlogins csv files saved in the actorlogin
 dir and extract all the unique user actorlogins along with
 how many times each user interacted with the github
 platform. After extracting this information save it into a
-file.
+unique users file.
 '''
 
 import os

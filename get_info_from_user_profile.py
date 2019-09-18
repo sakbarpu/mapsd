@@ -2,7 +2,8 @@
 Go through the unique users file and read few users from
 it. Go to the github webpages of these users and download
 the html data from their webpage. Extract the country and 
-other information from that webpage if present.
+other information from that webpage if present. Store info
+in a mapsd file.
 '''
 
 import sys, os

@@ -1,3 +1,9 @@
+
+************************************************************************************************************************************************************
+The below are some notes regarding downloading the dataset from github archive present on bigquery google platform
+************************************************************************************************************************************************************
+
+
 From githubarchive.com :::
 
 
@@ -73,3 +79,18 @@ From stackoverflow answer https://stackoverflow.com/questions/18493533/how-to-do
 	There is a gsutil in Ubuntu 16.04 but it is an unrelated package.
 
 	Gunzip the files downloaded from the bucket
+
+************************************************************************************************************************************************************
+Process flow of scripts is presented below
+************************************************************************************************************************************************************
+
+	get_unique_users.py
+
+	get_info_from_user_profile.py
+
+	create_list_of_countrynames_different_langs.py (done once only)
+	
+	get_countrywise_stats.py
+
+	make_cum_countrystats.py
+	
