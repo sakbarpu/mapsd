@@ -13,6 +13,8 @@ import time, datetime
 from iso3166 import countries
 from collections import Counter
 
+# COMMIT_FILTER = 1000
+
 mapsd_file = sys.argv[1] #where is user file
 out_dir = sys.argv[2] #which dir to save output
 out_file = os.path.join(out_dir, "countrywise_" + os.path.basename(mapsd_file))
@@ -214,11 +216,13 @@ for x in countrywise.keys():
 	#Replace in the world-cities csv file country names by 2 letters code
 	#Check if the string presented is there in that database
 
+
 	#Example: (1) Vancouver, B.C. (2) Toronto, OR (3) Vancouver, BC (4) Burnaby, BC (5) Montreal, QC
 	#TODO: People in Canada has a habit of abbreviating province names as well.
 	#Create a database of list of provinces of canada and codes
 	#Replace the province names by codes in world-cities database
 	#Check if there is a entry in that database for the string we have 
+
 
 	#Example: (1) Wrocław Poland (2) Westford MA (3) Seattle WA (4) Guangzhou China (5) Espírito Santo - Brasil
 	#(6) Hefei China (7) Cambridge UK (8) Aurora CO (9) Quito - Ecuador (10) London UK
@@ -226,8 +230,10 @@ for x in countrywise.keys():
 	#Separate the string using space separator. Remove any special symbols in the string.
 	#Then search for the substrings in the world-cities database
 
+
 	#Example: (1) Purdue University (2) Facebook HQ
 	#TODO: Names of organizations to be mapped to their respective countries. 
+	#WE ARE IGNORING SUCH CASES BECAUSE THEY RARELY OCCUR AND ARE HARD TO CATCH
 	#Look for a database where universities are mapped to country names. 
 	#Look for another database where companies (especially software companies) are mapped to their respective databases.
 
