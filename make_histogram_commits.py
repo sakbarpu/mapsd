@@ -6,11 +6,12 @@ histogram. Store hists to file along with data.
 '''
 
 '''
-Results of analysing after making commits:
+results of analysing after making commits histogram:
 
-(1) There are bots that have accounts at github. they have
-names ending in [bot] and have the most traffic (commits)
-for github. we don't include them in histogram.
+(1) there are bots that have accounts at github. they have
+names ending in "[bot]" and have the most traffic (commits)
+for github. we don't include them in histogram. one such
+both is greenkeeper[bot].
 
 (2) filtering for more than 20 and less than 100000 commits
 makes sense. manually analyzed few accounts less than 20 and
@@ -18,23 +19,22 @@ they all look newbies. and few have more than 100000 commits
 and are considered outliers. so we reject them as well. more
 than 100000 commits in one year is simply not realistic. the
 reason we reject more than 100000 is because they are few
-and they skew the histogram extremely.
+and they badly skew the histogram.
 
-(3) filtering reduce the number of users from 10 million to
+(3) filtering reduced the number of users from 10 million to
 3 million.
 
 (4) most accounts on github are either bots or newbies. few
 are "experts" having large number of commits.
 
-(5) The stats are as follows:
-Number of users analysed (after filtering): 2787647
-Minimum: 21 Maximum: 99039 Mean: 129 Median: 52.0
+(5) the stats are as follows:
+number of users analysed (after filtering):: 2787647
+commits:: minimum: 21 maximum: 99039 mean: 129 median: 52
 
-(6) histogram shows that most users are within range of 0 to
-1000 commits. very few are "experts" and have more than 1000
-commits. 
+(6) histogram shows that most users are within 1000 commits.
+very few are "experts" and have more than 1000 commits. 
 
-(7) In particular:
+(7) in particular:
      num_commits: num_users
 >=20	 commits: 2787647
 >=100	 commits: 742220
