@@ -55,6 +55,27 @@ very few are "experts" and have more than 1000 commits.
 60000-80000  commits: 30
 80000-100000 commits: 20
 
+
+     		 commits
+>= 20 		:359722380
+>= 100 		:267056584
+>= 1000		:95992996
+>= 10000	:19544457
+>= 20000 	:11765155
+>= 40000 	:6703684
+>= 60000 	:3868332
+>= 80000 	:814353
+>= 100000 	:0
+
+20-100		:92665796
+100-1000	:171063588
+1000-10000	:76448539
+10000-20000	:7779302
+20000-40000	:5061471
+40000-60000	:2835352
+60000-80000	:2053979
+80000-100000	:814353
+
 '''
 import sys, os
 import matplotlib.pyplot as plt
@@ -150,6 +171,7 @@ for line in f:
 			bottom_k.append(y)
 			bottom_k_names.append(x)
 		if c % 10000 == 0: print (c)
+#	if c == 10000: break
 	c+=1
 
 	#append commits to data. after the loop we visualize it.
@@ -164,6 +186,7 @@ if GATHER_STATS:
 
 # plot and show stats for overall
 print ("Number of users analysed (after filtering):",c)
+print ("Number of commits done by those users:", sum(data))
 print ("Minimum:", min(data), 
 	"Maximum:", max(data), 
 	"Mean:", int(numpy.mean(data)), 
@@ -174,6 +197,8 @@ data_sorted = sorted(data)
 
 for c in l:
 	print (len(data_sorted) - bisect(data_sorted,c))	
+for c in l:
+	print (c, sum(data_sorted[bisect(data_sorted,c):]))
 
 frq = []
 edges = []
@@ -202,6 +227,38 @@ l.remove(20)
 l.remove(1000)
 ax.set_xticks(l)
 ax.tick_params(axis='both', which='major', labelsize=10)
+
+ax.text(50000, 160000, 
+	'      commits   : users', fontweight='bold')
+ax.text(30000, 100000, 
+	'[20-100]              92665796  : 2045427')
+ax.text(30000, 65000, 
+	'[100-1000]        171063588  : 704124')
+ax.text(30000, 40000, 
+	'[1000-10000]      76448539  : 37230')
+ax.text(30000, 25000, 
+	'[10000-20000]      7779302  : 578')
+ax.text(30000, 16000, 
+	'[20000-40000]      5061471  : 179')
+ax.text(30000, 10000, 
+	'[40000-60000]      2835352  : 59')
+ax.text(30000, 6500, 
+	'[60000-80000]      2053979  : 30')
+ax.text(30000, 4500, 
+	'[80000-100000]      814353  : 20')
+ax.text(40500, 2500, 
+	'Total:     359722380   : 2787647')
+
+ax.text(25000, 1500,
+	'Notice 9480368 users  --filter-->  2787647 users')
+
+ax.text(40500, 500, 
+	'Commits: Min: 21, Max: 99039 ')
+ax.text(56000, 200,
+	'Mean: 129, Med: 52')
+
+
+
 plt.savefig(os.path.join(out_dir,"commits_overall.png"))
 
 o_file = open(os.path.join(out_dir,"commits_overall.p"),'wb')
