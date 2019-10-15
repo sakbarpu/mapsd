@@ -8,12 +8,16 @@ histogram. Store hists to file along with data.
 '''
 results of analysing after making commits histogram:
 
-(1) there are bots that have accounts at github. they have
+(1) bots are there (found while exploration of data): 
+
+there are bots that have accounts at github. they have
 names ending in "[bot]" and have the most traffic (commits)
 for github. we don't include them in histogram. one such
 both is greenkeeper[bot].
 
-(2) filtering for more than 20 and less than 100000 commits
+(2) 20 to 100000 commits make sense (again exploration study):
+
+filtering for more than 20 and less than 100000 commits
 makes sense. manually analyzed few accounts less than 20 and
 they all look newbies. and few have more than 100000 commits
 and are considered outliers. so we reject them as well. more
@@ -21,13 +25,18 @@ than 100000 commits in one year is simply not realistic. the
 reason we reject more than 100000 is because they are few
 and they badly skew the histogram.
 
-(3) filtering reduced the number of users from 10 million to
+(3) 10 million users became 3 million users:
+
+filtering reduced the number of users from 10 million to
 3 million.
 
-(4) most accounts on github are either bots or newbies. few
+(4) mostly bots and newbies are there (hence, the reduction):
+
+most accounts on github are either bots or newbies. few
 are "experts" having large number of commits.
 
 (5) the stats are as follows:
+
 number of users analysed (after filtering):: 2787647
 commits:: minimum: 21 maximum: 99039 mean: 129 median: 52
 
@@ -55,7 +64,6 @@ very few are "experts" and have more than 1000 commits.
 60000-80000  commits: 30
 80000-100000 commits: 20
 
-
      		 commits
 >= 20 		:359722380
 >= 100 		:267056584
@@ -76,7 +84,21 @@ very few are "experts" and have more than 1000 commits.
 60000-80000	:2053979
 80000-100000	:814353
 
+(8) average (commits/users for different range):
+
+20-100		: 45 
+100-1000	: 242
+1000-10000	: 2053
+10000-20000	: 13459
+20000-40000	: 28276
+40000-60000	: 48056
+60000-80000	: 68465
+80000-100000	: 40717
+
+
+
 '''
+
 import sys, os
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
@@ -85,7 +107,6 @@ import pickle
 import numpy
 from bisect import bisect
 
-
 in_file = sys.argv[1]
 out_dir = sys.argv[2]
 
@@ -93,6 +114,7 @@ f = open(in_file)
 data = []
 c = 0
 
+#top and bottom users in terms of commits
 GATHER_STATS = False
 top_k = []
 top_k_names = []
@@ -101,6 +123,7 @@ bottom_k = []
 bottom_k_names = []
 k=100
 
+#filter based on min and max commit threshold
 FILTER = True
 if FILTER:
 	min_commits_threshold = 20
@@ -109,6 +132,7 @@ else:
 	min_commits_threshold = 0
 	max_commits_threshold = inf
 
+#loop over each unique user in file
 for line in f:
 	line_split = line.strip().split(" ")
 	name = line_split[0]
@@ -123,6 +147,7 @@ for line in f:
 	if name.endswith("Bot"): continue
 	if name.endswith("BOT"): continue
 
+	#if commits not within min to max range then drop this user
 	if FILTER:
 		if commits <= min_commits_threshold: continue
 		if commits >= max_commits_threshold: continue
@@ -192,14 +217,18 @@ print ("Minimum:", min(data),
 	"Mean:", int(numpy.mean(data)), 
 	"Median:", numpy.median(data))
 
+#to plot we need these jumps (bins) in the commits
 l = [min_commits_threshold, 100, 1000, 10000, 20000, 40000, 60000, 80000, 100000]
+
 data_sorted = sorted(data)
-
+print ("users")
 for c in l:
-	print (len(data_sorted) - bisect(data_sorted,c))	
+	print (">=", c, len(data_sorted) - bisect(data_sorted,c))	
+print ("commits")
 for c in l:
-	print (c, sum(data_sorted[bisect(data_sorted,c):]))
+	print (">=", c, sum(data_sorted[bisect(data_sorted,c):]))
 
+#Plot histograms for each range(x,y)
 frq = []
 edges = []
 for c in range(len(l)-1):
@@ -218,6 +247,7 @@ for c in range(len(l)-1):
 	frq.extend(tmp1)
 	edges.extend(tmp2[:-1])
 
+#Plot the overall histogram
 fig, ax = plt.subplots()
 ax.bar(edges, frq, width=100, align="edge", log=True) 
 ax.set_title("User histogram based on commits") 
@@ -228,6 +258,7 @@ l.remove(1000)
 ax.set_xticks(l)
 ax.tick_params(axis='both', which='major', labelsize=10)
 
+#print some stats on the overall commits plot
 ax.text(50000, 160000, 
 	'      commits   : users', fontweight='bold')
 ax.text(30000, 100000, 
@@ -263,3 +294,5 @@ plt.savefig(os.path.join(out_dir,"commits_overall.png"))
 
 o_file = open(os.path.join(out_dir,"commits_overall.p"),'wb')
 pickle.dump((frq,edges), o_file)
+
+
