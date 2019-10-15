@@ -5,12 +5,64 @@ histogram. Store hists to file along with data.
 
 '''
 
+'''
+Results of analysing after making commits:
+
+(1) There are bots that have accounts at github. they have
+names ending in [bot] and have the most traffic (commits)
+for github. we don't include them in histogram.
+
+(2) filtering for more than 20 and less than 100000 commits
+makes sense. manually analyzed few accounts less than 20 and
+they all look newbies. and few have more than 100000 commits
+and are considered outliers. so we reject them as well. more
+than 100000 commits in one year is simply not realistic. the
+reason we reject more than 100000 is because they are few
+and they skew the histogram extremely.
+
+(3) filtering reduce the number of users from 10 million to
+3 million.
+
+(4) most accounts on github are either bots or newbies. few
+are "experts" having large number of commits.
+
+(5) The stats are as follows:
+Number of users analysed (after filtering): 2787647
+Minimum: 21 Maximum: 99039 Mean: 129 Median: 52.0
+
+(6) histogram shows that most users are within range of 0 to
+1000 commits. very few are "experts" and have more than 1000
+commits. 
+
+(7) In particular:
+     num_commits: num_users
+>=20	 commits: 2787647
+>=100	 commits: 742220
+>=1000	 commits: 38096
+>=10000	 commits: 866
+>=20000	 commits: 288
+>=40000	 commits: 109
+>=60000	 commits: 50
+>=80000	 commits: 20
+>=100000 commits: 0
+
+20-100 	     commits: 2045427  
+100-1000     commits: 704124
+1000-10000   commits: 37230
+10000-20000  commits: 578
+20000-40000  commits: 179
+40000-60000  commits: 59
+60000-80000  commits: 30
+80000-100000 commits: 20
+
+'''
 import sys, os
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 import matplotlib.ticker as mtick
 import pickle
 import numpy
+from bisect import bisect
 
 
 in_file = sys.argv[1]
@@ -118,6 +170,11 @@ print ("Minimum:", min(data),
 	"Median:", numpy.median(data))
 
 l = [min_commits_threshold, 100, 1000, 10000, 20000, 40000, 60000, 80000, 100000]
+data_sorted = sorted(data)
+
+for c in l:
+	print (len(data_sorted) - bisect(data_sorted,c))	
+
 frq = []
 edges = []
 for c in range(len(l)-1):
