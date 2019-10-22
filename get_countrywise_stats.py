@@ -352,9 +352,6 @@ for x in countrywise.keys():
 						success = True
 						break
 
-
-
-
 	#Example: (1) Wrocław Poland (2) Westford MA (3) Seattle WA (4) Guangzhou China (5) Espírito Santo - Brasil
 	#(6) Hefei China (7) Cambridge UK (8) Aurora CO (9) Quito - Ecuador (10) London UK
  	#People sometimes will not put comma separator in the string to separate city and country names or city and subcountry names
@@ -394,17 +391,30 @@ for x in countrywise.keys():
 					success = True
 					break
 
-	#Example: (1) San Francisco Bay Area, CA (2) Athens, GA (3) Stanford, CA (4) Hillsboro, OR (5) Bangalore, IN
-	if success == False: #if above straightforward looking for country names in the different language database does not work
-		if len(x_split) > 1: #look at US state names
-			for n in x_split:
-				n = n.strip().lower().replace(".","")
-				if n in us_state_codes:
-					c+=1
-					final_data['US'].append(countrywise[x])	
-					success == True
-					#print (x)
-					break
+#	#Simply seeing if the US state codes are there. 
+#	#Example: (1) San Francisco Bay Area, CA (2) Athens, GA (3) Stanford, CA (4) Hillsboro, OR
+#	if success == False: #if above straightforward looking for country names in the different language database does not work
+#		if len(x_split) > 1: #look at US state names
+#			for n in x_split:
+#				n = n.strip().lower().replace(".","")
+#				if n in us_state_codes:
+#					c+=1
+#					final_data['US'].append(countrywise[x])	
+#					success = True
+#					break
+#	#Simply seeing if the Canada province codes are there
+#	#Example: (1) B.C
+#	if success == False: #if above straightforward looking for country names in the different language database does not work
+#		if len(x_split) > 1: #look at Canada state names
+#			for n in x_split:
+#				n = n.strip().lower().replace(".","")
+#				if n in canada_province_codes:
+#					c+=1
+#					final_data['CA'].append(countrywise[x])	
+#					success = True
+#					print (x)
+#					break
+#
 
 
 	#Example: (1) Purdue University (2) Facebook HQ
