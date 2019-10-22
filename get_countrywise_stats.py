@@ -68,10 +68,6 @@ for cc in actual_countrycodes:
 	actual_countrycodes_3letter[countries.get(cc.lower()).alpha3] = cc
 actual_countrycodes_3letter["ACI"] = "AC"
 
-#load state codes for US states
-us_state_codes = [x.lower() for x in open("../data/us_states/state_codes.txt").read().split("\n")]
-us_state_names = [x.lower() for x in open("../data/us_states/state_names.txt").read().split("\n")]
-
 #load cities database ~25000 cities
 #(cityname,countryname,subcountryname)
 cities = [x.lower() for x in open("../world-cities/data/world-cities.csv").read().strip().split("\n")]
@@ -82,6 +78,41 @@ for city_entry in cities:
 	if city_country in actual_countrynames_in_en:
 		mapping_countries_incitiesdatabase_to_actual_codes[city_country] = actual_countrycodes[actual_countrynames_in_en.index(city_country)]
 
+
+#Example: (1) Vancouver, B.C. (2) Toronto, OR (3) Vancouver, BC (4) Burnaby, BC (5) Montreal, QC
+#People in Canada US and many other countries has a habit of abbreviating province/state names.
+#Create a database of list of provinces and states and codes
+#Replace the province names by codes in world-cities database
+#Check if there is a entry in that database for the string we have 
+
+#load state codes for US states
+us_state_codes = [x.lower() for x in open("../data/us_states/state_codes.txt").read().split("\n")]
+us_state_names = [x.lower() for x in open("../data/us_states/state_names.txt").read().split("\n")]
+#load province codes for Canada provinces
+canada_province_codes = [x.lower() for x in open("../data/canada_provinces/province_codes.txt").read().split("\n")]
+canada_province_names = [x.lower() for x in open("../data/canada_provinces/province_names.txt").read().split("\n")]
+#load province codes for Australia provinces
+australia_province_codes = [x.lower() for x in open("../data/australia_provinces/province_codes.txt").read().split("\n")]
+australia_province_names = [x.lower() for x in open("../data/australia_provinces/province_names.txt").read().split("\n")]
+#load province codes for Brazil provinces
+brazil_province_codes = [x.lower() for x in open("../data/brazil_provinces/province_codes.txt").read().split("\n")]
+brazil_province_names = [x.lower() for x in open("../data/brazil_provinces/province_names.txt").read().split("\n")]
+#load province codes for China provinces
+china_province_codes = [x.lower() for x in open("../data/china_provinces/province_codes.txt").read().split("\n")]
+china_province_names = [x.lower() for x in open("../data/china_provinces/province_names.txt").read().split("\n")]
+#load province codes for Japan provinces
+japan_province_codes = [x.lower() for x in open("../data/japan_provinces/province_codes.txt").read().split("\n")]
+japan_province_names = [x.lower() for x in open("../data/japan_provinces/province_names.txt").read().split("\n")]
+#load province codes for Pakistan provinces
+pakistan_province_codes = [x.lower() for x in open("../data/pakistan_provinces/province_codes.txt").read().split("\n")]
+pakistan_province_names = [x.lower() for x in open("../data/pakistan_provinces/province_names.txt").read().split("\n")]
+#load province codes for India states
+india_state_codes = [x.lower() for x in open("../data/india_states/state_codes.txt").read().split("\n")]
+india_state_names = [x.lower() for x in open("../data/india_states/state_names.txt").read().split("\n")]
+#load province codes for Mexico states
+mexico_state_codes = [x.lower() for x in open("../data/mexico_states/state_codes.txt").read().split("\n")]
+mexico_state_names = [x.lower() for x in open("../data/mexico_states/state_names.txt").read().split("\n")]
+
 #add more city entries with US state names replaced with codes
 cities_to_add = []
 for city_ in cities:
@@ -91,7 +122,101 @@ for city_ in cities:
 		else:
 			new_entry = [city_[0],city_[1],us_state_codes[us_state_names.index(city_[2])]]
 		cities_to_add.append(new_entry)
+for city_ in cities_to_add: cities.append(city_)
+#add more city entries with Canada province names replaced with codes
+cities_to_add = []
+for city_ in cities:
+	if city_[1] == "canada":
+		new_entry = [city_[0],city_[1],canada_province_codes[canada_province_names.index(city_[2])]]
+		cities_to_add.append(new_entry)
+for city_ in cities_to_add: cities.append(city_)
+#add more city entries with Australia province names replaced with codes
+cities_to_add = []
+for city_ in cities:
+	if city_[1] == "australia":
+		if city_[2] == 'act':
+			new_entry = [city_[0],city_[1],'ACT']
+		else:
+			new_entry = [city_[0],city_[1],australia_province_codes[australia_province_names.index(city_[2])]]
+		cities_to_add.append(new_entry)
+for city_ in cities_to_add: cities.append(city_)
+#add more city entries with Brazil province names replaced with codes
+cities_to_add = []
+for city_ in cities:
+	if city_[1] == "brazil":
+		if city_[2] == "federal district": city_[2] = "distrito federal"
+		new_entry = [city_[0],city_[1],brazil_province_codes[brazil_province_names.index(city_[2])]]
+		cities_to_add.append(new_entry)
+for city_ in cities_to_add: cities.append(city_)
+#add more city entries with China province names replaced with codes
+cities_to_add = []
+for city_ in cities:
+	if city_[1] == "china":
+		if city_[2] == "ningxia hui autonomous region": city_[2] = "ningxia" 
+		if city_[2] == "inner mongolia": city_[2] = "nei mongol" 
+		new_entry = [city_[0],city_[1],china_province_codes[china_province_names.index(city_[2])]]
+		cities_to_add.append(new_entry)
+for city_ in cities_to_add: cities.append(city_)
+#add more city entries with Japan province names replaced with codes
+cities_to_add = []
+for city_ in cities:
+	if city_[1] == "japan":
+		new_entry = [city_[0],city_[1],japan_province_codes[japan_province_names.index(city_[2])]]
+		cities_to_add.append(new_entry)
+for city_ in cities_to_add: cities.append(city_)
+#add more city entries with India state names replaced with codes
+cities_to_add = []
+for city_ in cities:
+	if city_[1] == "india":
+		if city_[2] == "odisha": city_[2] = "orissa"
+		if city_[2] == "puducherry": city_[2] = "pondicherry"
+		new_entry = [city_[0],city_[1],india_state_codes[india_state_names.index(city_[2])]]
+		cities_to_add.append(new_entry)
+for city_ in cities_to_add: cities.append(city_)
+#add more city entries with Mexico state names replaced with codes
+cities_to_add = []
+for city_ in cities:
+	if city_[1] == "mexico":
+		if city_[2] == "state of mexico": city_[2] = "mexico"
+		if city_[2] == "mexico city": city_[2] = "mexico"
+		if city_[2] == "baja california": city_[2] = "baja california sur"
+		new_entry = [city_[0],city_[1],mexico_state_codes[mexico_state_names.index(city_[2])]]
+		cities_to_add.append(new_entry)
+for city_ in cities_to_add: cities.append(city_)
 
+#Example: (1) London, UK (2) Shenzhen, CN (3) Raleigh, US (4) Bangalore, IN (5) Dunedin, NZ 
+#Some people like to abbreviate country names in 2 letters code
+#Replace in the world-cities csv file country names by 2 letters code
+#Check if the string presented is there in that database
+cities_to_add = []
+for city_ in cities:
+	country_name_tmp = city_[1]
+	if country_name_tmp == "antigua and barbuda": country_name_tmp = "antigua & barbuda"
+	if country_name_tmp == "aland islands": country_name_tmp = "Åland Islands".lower()
+	if country_name_tmp == "saint barthelemy": country_name_tmp = "St. Barthélemy".lower()
+	if country_name_tmp == "democratic republic of the congo": country_name_tmp = "Congo - Kinshasa".lower()
+	if country_name_tmp == "republic of the congo": country_name_tmp = "Congo - Brazzaville".lower()
+	if country_name_tmp == "ivory coast": country_name_tmp = "Côte d’Ivoire".lower()
+	if country_name_tmp == "cabo verde": country_name_tmp = "cape verde".lower()
+	if country_name_tmp == "curacao": country_name_tmp = "Curaçao".lower()
+	if country_name_tmp == "hong kong": country_name_tmp = "Hong Kong SAR China".lower()
+	if country_name_tmp == "macao": country_name_tmp = "Macao SAR China".lower()
+	if country_name_tmp == "saint kitts and nevis": country_name_tmp = "St. Kitts & Nevis".lower()
+	if country_name_tmp == "saint lucia": country_name_tmp = "St. Lucia".lower()
+	if country_name_tmp == "saint martin": country_name_tmp = "St. Martin".lower()
+	if country_name_tmp == "saint helena": country_name_tmp = "St. Helena".lower()
+	if country_name_tmp == "svalbard and jan mayen":country_name_tmp = "Svalbard & Jan Mayen".lower()
+	if country_name_tmp == "saint pierre and miquelon":country_name_tmp = "St. Pierre & Miquelon".lower()
+	if country_name_tmp == "reunion":country_name_tmp = "Réunion".lower()
+	if country_name_tmp == "turks and caicos islands":country_name_tmp = "Turks & Caicos Islands".lower()
+	if country_name_tmp == "trinidad and tobago":country_name_tmp = "Trinidad & Tobago".lower()
+	if country_name_tmp == ' d.c."': country_name_tmp = "United States".lower()
+	if country_name_tmp == 'vatican': country_name_tmp = "Vatican City".lower()
+	if country_name_tmp == 'saint vincent and the grenadines': country_name_tmp = "St. Vincent & Grenadines".lower()
+	if country_name_tmp == 'wallis and futuna': country_name_tmp = "Wallis & Futuna".lower()
+	country_code_tmp = actual_countrycodes[actual_countrynames_in_en.index(country_name_tmp)]
+	new_entry = [city_[0], city_[1], country_code_tmp]
+	cities_to_add.append(new_entry)
 for city_ in cities_to_add: cities.append(city_)
 
 #loop over extracted country names to try to identify them
@@ -100,6 +225,20 @@ c = 0
 final_data = {}
 for cc in actual_countrycodes:
 	final_data[cc] = []
+
+#read the cities2countries 1000 list 
+#this is the list of largest 1000 cities
+#we use it in getting country info
+#mainly because largest cities are just mentioned without
+#country info because they are so large and famous
+largest_cities = {}
+with open("../data/cities_1000/cities2countries_1000.txt") as f:
+	for line in f:
+		line_split = line.strip().split(",")
+		large_city = line_split[0].strip().lower()
+		large_city_country = line_split[1].strip().lower()
+		largest_cities[large_city] = large_city_country
+
 
 '''
 Overall logic to identify the country names from this vague
@@ -140,6 +279,7 @@ the country name.
 see below in todos
 
 '''
+
 progress_counter = 0
 for x in countrywise.keys():
 
@@ -148,6 +288,9 @@ for x in countrywise.keys():
 
 	success = False
 	x_split = x.strip().split(",") #if location tag is comma separated
+	y_split = x.strip().split(" ") #if location tag is space separated
+	z_split = x.strip().split("-") #if location tag is dash separated
+
 	if success == False:
 		for n in x_split:
 			n = n.strip().lower().replace(".","")
@@ -207,21 +350,21 @@ for x in countrywise.keys():
 					break
 	
 	#Example: (1) istanbul (2) karachi (3) paris
-	#TODO: Get the top 1000 cities in the world and map their names to their respective countries
+	#Get the top 1000 cities in the world and map their names to their respective countries
 	#This is based on the fact that those cities are so famous that mostly people living there refer to their location as their city and ignore the country info
+	if success == False:
+		if len(x_split) > 1:
+			x_split = [x.strip().lower() for x in x_split]
+			for large_city in largest_cities:
+				for a1 in x_split:
+					if a1 == large_city:
+						#print (a1)
+						c+=1
+						final_data[mapping_countries_incitiesdatabase_to_actual_codes[largest_cities[large_city]]].append(countrywise[x])
+						success = True
+						break
 
 
-	#Example: (1) London, UK (2) Shenzhen, CN (3) Raleigh, US (4) Bangalore, IN (5) Dunedin, NZ 
-	#TODO: Some people like to abbreviate country names in 2 letters code
-	#Replace in the world-cities csv file country names by 2 letters code
-	#Check if the string presented is there in that database
-
-
-	#Example: (1) Vancouver, B.C. (2) Toronto, OR (3) Vancouver, BC (4) Burnaby, BC (5) Montreal, QC
-	#TODO: People in Canada has a habit of abbreviating province names as well.
-	#Create a database of list of provinces of canada and codes
-	#Replace the province names by codes in world-cities database
-	#Check if there is a entry in that database for the string we have 
 
 
 	#Example: (1) Wrocław Poland (2) Westford MA (3) Seattle WA (4) Guangzhou China (5) Espírito Santo - Brasil
@@ -229,10 +372,42 @@ for x in countrywise.keys():
  	#People sometimes will not put comma separator in the string to separate city and country names or city and subcountry names
 	#Separate the string using space separator. Remove any special symbols in the string.
 	#Then search for the substrings in the world-cities database
+	if success == False: #look into the cities database
+		if len(y_split) > 1:
+			y_split = [y.strip().lower() for y in y_split]
+			for city_entry in cities:
+				count_match = 0
+				for a1 in y_split: 
+					for a2 in city_entry: 
+						if a1 == a2: 
+							count_match+=1
+				#The entries much match in at least two locations	
+				if count_match >= 2:
+					c+=1
+					#print (mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]],y_split)
+					final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]].append(countrywise[x])
+					success = True
+					break
 
-
+	if success == False: #look into the cities database
+		if len(z_split) > 1:
+			z_split = [z.strip().lower() for z in z_split]
+			for city_entry in cities:
+				count_match = 0
+				for a1 in z_split: 
+					for a2 in city_entry: 
+						if a1 == a2: 
+							count_match+=1
+				#The entries much match in at least two locations	
+				if count_match >= 2:
+					c+=1
+					#print (mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]],z_split)
+					final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]].append(countrywise[x])
+					success = True
+					break
+	
 	#Example: (1) Purdue University (2) Facebook HQ
-	#TODO: Names of organizations to be mapped to their respective countries. 
+	# Names of organizations to be mapped to their respective countries. 
 	#WE ARE IGNORING SUCH CASES BECAUSE THEY RARELY OCCUR AND ARE HARD TO CATCH
 	#Look for a database where universities are mapped to country names. 
 	#Look for another database where companies (especially software companies) are mapped to their respective databases.
@@ -287,7 +462,12 @@ with open(out_file, "w") as out_f:
 		elif country_code.lower() == '': continue
 		else: alpha3code = str(countries.get(country_code.lower()).alpha3)
 
-		out_f.write(str(country_code) + "\t" + str(alpha3code) + "\t" + str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + str(len(country_commits)) + "\t" + str(sum(country_commits)) + "\t" + ",".join([str(x) +":"+ str(y) for x,y in country_langs]) + "\n")
+		out_f.write(str(country_code) + "\t" + str(alpha3code) + "\t" + 
+				str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + 
+				str(len(country_commits)) + "\t" + str(sum(country_commits)) + "\t" + 
+				",".join([str(x) +":"+ str(y) for x,y in country_langs]) + "\n")
 
 print ("TOT", total_commits)
 print ("Done in time:" , time.time()-start_time)
+
+
