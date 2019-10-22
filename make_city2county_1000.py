@@ -2,6 +2,8 @@ import sys, os
 from html.parser import HTMLParser
 import re
 
+#(ONE TIME EXECUTION)
+
 #converts a cities 2 countries list of html file to txt
 #python make_city2county_1000.py clean_cities2countries_1000.html cities2countries_1000.txt 
 

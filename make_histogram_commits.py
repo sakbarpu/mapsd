@@ -2,6 +2,7 @@
 Get unique users file as input which has commits for each
 user. Grab the information about commits and make a
 histogram. Store hists to file along with data.
+(ONE TIME EXECUTION)
 
 '''
 

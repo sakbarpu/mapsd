@@ -4,6 +4,8 @@ dir and extract all the unique user actorlogins along with
 how many times each user interacted with the github
 platform. After extracting this information save it into a
 unique users file.
+(ONE TIME EXECUTION)
+
 '''
 
 import os

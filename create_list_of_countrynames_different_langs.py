@@ -2,7 +2,7 @@
 Using the country_list library create a list of all
 countries in many different languages (~620). Store them in
 a disk.
-
+(ONE TIME EXECUTION)
 '''
 
 import sys, os
