@@ -319,18 +319,6 @@ for x in countrywise.keys():
 				#print (x)
 				break
 
-#	#Example: (1) San Francisco Bay Area, CA (2) Athens, GA (3) Stanford, CA (4) Hillsboro, OR (5) Bangalore, IN
-#	if success == False: #if above straightforward looking for country names in the different language database does not work
-#		if len(x_split) > 1: #look at US state names
-#			for n in x_split:
-#				n = n.strip().lower().replace(".","")
-#				if n in us_state_codes:
-#					c+=1
-#					final_data['US'].append(countrywise[x])	
-#					success == True
-#					#print (x)
-#					break
-
 	#Example: (1) Hyderabad ,Telangana (2) Utrecht, The Netherlands (3) Sunnyvale, CA (4) East Palo Alto, California 
 	#(5) São Paulo,SP - Brasil (6) Chamba, Himachal Pradesh (7) Beijing, P.R.China
 	if success == False: #look into the cities database
@@ -405,7 +393,20 @@ for x in countrywise.keys():
 					final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]].append(countrywise[x])
 					success = True
 					break
-	
+
+	#Example: (1) San Francisco Bay Area, CA (2) Athens, GA (3) Stanford, CA (4) Hillsboro, OR (5) Bangalore, IN
+	if success == False: #if above straightforward looking for country names in the different language database does not work
+		if len(x_split) > 1: #look at US state names
+			for n in x_split:
+				n = n.strip().lower().replace(".","")
+				if n in us_state_codes:
+					c+=1
+					final_data['US'].append(countrywise[x])	
+					success == True
+					#print (x)
+					break
+
+
 	#Example: (1) Purdue University (2) Facebook HQ
 	# Names of organizations to be mapped to their respective countries. 
 	#WE ARE IGNORING SUCH CASES BECAUSE THEY RARELY OCCUR AND ARE HARD TO CATCH
