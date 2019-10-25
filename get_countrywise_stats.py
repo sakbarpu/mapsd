@@ -17,8 +17,9 @@ from collections import Counter
 
 mapsd_file = sys.argv[1] #where is user file
 out_dir = sys.argv[2] #which dir to save output
-out_file = os.path.join(out_dir, "countrywise_" + os.path.basename(mapsd_file))
-if os.path.exists(out_file):
+out_file1 = os.path.join(out_dir, "countrywise_" + os.path.basename(mapsd_file))
+out_file2 = os.path.join(out_dir, "reponamesdescs_" + os.path.basename(mapsd_file))
+if os.path.exists(out_file1):
 	print ("Out file already there. Check if this batch is done already. Or remove the file and restart process")
 	exit()
 
@@ -37,10 +38,11 @@ for m in mapsd: #loop over all the users in the file
 	if country in countrywise: #if found in dict
 		countrywise[country][0].append(commits)
 		countrywise[country][1].append(langs)
-		countrywise[country][2].append(reponames)
-		countrywise[country][3].append(repodescs)
+		countrywise[country][2].append(reponames+repodescs)
+		#countrywise[country][3].append(repodescs)
 	else: #if not found in dict create new entry
-		countrywise[country] = [[commits], [langs], [reponames], [repodescs]]
+		countrywise[country] = [[commits], [langs], [reponames+repodescs]]
+		#countrywise[country] = [[commits], [langs], [reponames], [repodescs]]
 
 #for cn in countrywise.keys(): print (cn)
 
@@ -443,40 +445,53 @@ print (c, " countries out of ", len(countrywise.keys()), " entries identified")
 
 #print (list(final_data.keys()))
 total_commits = 0
-with open(out_file, "w") as out_f:
-	out_f.write("Code1 \t Code2 \t Name \t #Developers \t #Commits \t #Languages\n")
-	for country_code in final_data.keys():
-		country_data = final_data[country_code]
+with open(out_file1, "w") as out_f1:
+	with open(out_file2, "w") as out_f2:
 
-		country_commits = []
-		country_langs = []
-		country_reponames = []
-		country_repodescs = []
-		for entry in country_data:
-			country_commits.extend(entry[0])
-			country_langs.extend([item for sublist in [x.split(",") for x in entry[1]] for item in sublist])
-			country_reponames.extend([x.split(",") for x in entry[2]])
-			country_repodescs.extend([x.split(";;;") for x in entry[3]])
+		out_f1.write("Code1 \t Code2 \t Name \t #Developers \t #Commits \t #Languages\n")
+		out_f2.write("Code1 \t Code2 \t Name \t Reponames;;Repodescs;;; \n")		
+		for country_code in final_data.keys():
+			country_data = final_data[country_code]
+			print (country_code)
+			print (country_data)
+			country_commits = []
+			country_langs = []
+			country_reponames = []
+			country_repodescs = []
+			for entry in country_data:
+				country_commits.extend(entry[0])
+				country_langs.extend([item for sublist in [x.split(",") for x in entry[1]] for item in sublist])
+				country_reponames.extend([x.split(",") for x in entry[2]])
+				country_repodescs.extend([x.split(";;;") for x in entry[3]])
+				print ("-----------------------------")
+				print (entry)
+				print (country_commits)
+				print (country_langs)
+				print (country_reponames)
+				print (country_repodescs)
+			exit()
+			total_commits+=len(country_commits)
+
+			country_commits = [int(x) for x in country_commits]
+			country_langs = Counter(country_langs).most_common()
+
+			if country_code.lower() == "ac": alpha3code = "ACIS"
+			elif country_code.lower() == "ic": alpha3code = "CAIS"
+			elif country_code.lower() == "ea": alpha3code = "CMEA"
+			elif country_code.lower() == "dg": alpha3code = "DGCA"
+			elif country_code.lower() == "xa": alpha3code = "FGXA"
+			elif country_code.lower() == "xb": alpha3code = "FGXB"
+			elif country_code.lower() == "ta": alpha3code = "TDCU"
+			elif country_code.lower() == '': continue
+			else: alpha3code = str(countries.get(country_code.lower()).alpha3)
+
+			out_f1.write(str(country_code) + "\t" + str(alpha3code) + "\t" + 
+					str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + 
+					str(len(country_commits)) + "\t" + str(sum(country_commits)) + "\t" + 
+					",".join([str(x) +":"+ str(y) for x,y in country_langs]) + "\n")
+
 		
-		total_commits+=len(country_commits)
 
-		country_commits = [int(x) for x in country_commits]
-		country_langs = Counter(country_langs).most_common()
-
-		if country_code.lower() == "ac": alpha3code = "ACIS"
-		elif country_code.lower() == "ic": alpha3code = "CAIS"
-		elif country_code.lower() == "ea": alpha3code = "CMEA"
-		elif country_code.lower() == "dg": alpha3code = "DGCA"
-		elif country_code.lower() == "xa": alpha3code = "FGXA"
-		elif country_code.lower() == "xb": alpha3code = "FGXB"
-		elif country_code.lower() == "ta": alpha3code = "TDCU"
-		elif country_code.lower() == '': continue
-		else: alpha3code = str(countries.get(country_code.lower()).alpha3)
-
-		out_f.write(str(country_code) + "\t" + str(alpha3code) + "\t" + 
-				str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + 
-				str(len(country_commits)) + "\t" + str(sum(country_commits)) + "\t" + 
-				",".join([str(x) +":"+ str(y) for x,y in country_langs]) + "\n")
 
 print ("TOT", total_commits)
 print ("Done in time:" , time.time()-start_time)
