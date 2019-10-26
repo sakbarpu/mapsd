@@ -38,12 +38,12 @@ for m in mapsd: #loop over all the users in the file
 	if country in countrywise: #if found in dict
 		countrywise[country][0].append(commits)
 		countrywise[country][1].append(langs)
-		countrywise[country][2].append(reponames+repodescs)
+		countrywise[country][2].append(reponames+";;;"+repodescs)
 		#countrywise[country][3].append(repodescs)
 	else: #if not found in dict create new entry
-		countrywise[country] = [[commits], [langs], [reponames+repodescs]]
+		countrywise[country] = [[commits], [langs], [reponames+";;;"+repodescs]]
 		#countrywise[country] = [[commits], [langs], [reponames], [repodescs]]
-
+	if counter == 1000: break
 #for cn in countrywise.keys(): print (cn)
 
 #From here onwards we try to normalize the country names
@@ -451,25 +451,28 @@ with open(out_file1, "w") as out_f1:
 		out_f1.write("Code1 \t Code2 \t Name \t #Developers \t #Commits \t #Languages\n")
 		out_f2.write("Code1 \t Code2 \t Name \t Reponames;;Repodescs;;; \n")		
 		for country_code in final_data.keys():
+			#country_code = "PK"
 			country_data = final_data[country_code]
 			print (country_code)
 			print (country_data)
 			country_commits = []
 			country_langs = []
-			country_reponames = []
-			country_repodescs = []
+			#country_reponames = []
+			#country_repodescs = []
+			country_reponamesdescs = []
 			for entry in country_data:
 				country_commits.extend(entry[0])
 				country_langs.extend([item for sublist in [x.split(",") for x in entry[1]] for item in sublist])
-				country_reponames.extend([x.split(",") for x in entry[2]])
-				country_repodescs.extend([x.split(";;;") for x in entry[3]])
-				print ("-----------------------------")
-				print (entry)
-				print (country_commits)
-				print (country_langs)
-				print (country_reponames)
-				print (country_repodescs)
-			exit()
+				country_reponamesdescs.extend(entry[2])
+				#country_reponamesdescs.extend([x.split(",") for x in entry[2]])
+				#country_repodescs.extend([x.split(";;;") for x in entry[3]])
+				#print ("\n\n\n-----------------------------")
+				#print (entry)
+				#print (country_commits)
+				#print (country_langs)
+				#print (country_reponamesdescs)
+				#print (country_repodescs)
+
 			total_commits+=len(country_commits)
 
 			country_commits = [int(x) for x in country_commits]
@@ -490,10 +493,13 @@ with open(out_file1, "w") as out_f1:
 					str(len(country_commits)) + "\t" + str(sum(country_commits)) + "\t" + 
 					",".join([str(x) +":"+ str(y) for x,y in country_langs]) + "\n")
 
-		
+			
+			out_f2.write(str(country_code) + "\t" + str(alpha3code) + "\t" +
+					str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + "<useraccount>" + 
+					"\t<useraccount>".join([str(x.strip()) for x in country_reponamesdescs]) + "\n")
 
 
-print ("TOT", total_commits)
+print ("Total commits", total_commits)
 print ("Done in time:" , time.time()-start_time)
 
 
