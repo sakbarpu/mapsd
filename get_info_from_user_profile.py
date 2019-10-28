@@ -24,7 +24,7 @@ if os.path.exists(out_file):
 github_page = "https://github.com/" #homepage for github
 
 counter = start_users #counter for users in the file
-percent_users_to_write = 5 #this percent users to write inside the loop (kind of like event)
+percent_users_to_write = 0.5 #this percent users to write inside the loop (kind of like event)
 num_users_total = end_users - start_users
 num_users_to_write = ceil((percent_users_to_write/100) * num_users_total)
 
