@@ -16,12 +16,15 @@ from collections import Counter
 # COMMIT_FILTER = 1000
 
 mapsd_file = sys.argv[1] #where is user file
-out_dir = sys.argv[2] #which dir to save output
-out_file1 = os.path.join(out_dir, "countrywise_" + os.path.basename(mapsd_file))
+mapsd_data_dir = sys.argv[2] #where is the data stored for mapsd project
+out_dir = os.path.join(sys.argv[3], os.path.basename(mapsd_file)[:-4]) #which dir to save output
+out_file_stats = os.path.join(out_dir, "countrywise_" + os.path.basename(mapsd_file))
 out_file2 = os.path.join(out_dir, "reponamesdescs_" + os.path.basename(mapsd_file))
-if os.path.exists(out_file1):
-	print ("Out file already there. Check if this batch is done already. Or remove the file and restart process")
+if os.path.exists(out_dir):
+	print ("Out dir already there. Check if this batch is done already. Or remove the dir and restart process")
 	exit()
+else:
+	os.mkdir(out_dir)
 
 counter = 0 #counter for users in the file
 mapsd = open(mapsd_file) #mapsd file to read
@@ -43,7 +46,7 @@ for m in mapsd: #loop over all the users in the file
 	else: #if not found in dict create new entry
 		countrywise[country] = [[commits], [langs], [reponames+";;;"+repodescs]]
 		#countrywise[country] = [[commits], [langs], [reponames], [repodescs]]
-	if counter == 1000: break
+	#if counter == 1000: break
 #for cn in countrywise.keys(): print (cn)
 
 #From here onwards we try to normalize the country names
@@ -52,15 +55,15 @@ for m in mapsd: #loop over all the users in the file
 #the countrywise dict
 
 #load actual country names
-actual_countrycodes = open("../data/country_names/country_codes.txt").read().split("\n")
-actual_countrynames_in_en = [x.lower() for x in open("../data/country_names/en.txt").read().split("\n")]
+actual_countrycodes = open(mapsd_data_dir + "/country_names/country_codes.txt").read().split("\n")
+actual_countrynames_in_en = [x.lower() for x in open(mapsd_data_dir + "/country_names/en.txt").read().split("\n")]
 actual_countrynames_diff_langs = {}
-diff_langs = os.listdir("../data/country_names/")
+diff_langs = os.listdir(mapsd_data_dir + "/country_names/")
 for lang in diff_langs:
 	if lang == "country_codes.txt": continue
 	if lang == "en.txt": continue
 	langname = lang[:-4]
-	actual_countrynames_diff_langs[langname] = [x.lower() for x in open(os.path.join("../data/country_names/",lang)).read().split("\n")]
+	actual_countrynames_diff_langs[langname] = [x.lower() for x in open(os.path.join(mapsd_data_dir + "/country_names/",lang)).read().split("\n")]
 
 #get mapping from 3 letter country codes to 2 letter actual codes that we have used as identifiers for countries in mapsd
 actual_countrycodes_3letter = {}
@@ -88,32 +91,32 @@ for city_entry in cities:
 #Check if there is a entry in that database for the string we have 
 
 #load state codes for US states
-us_state_codes = [x.lower() for x in open("../data/us_states/state_codes.txt").read().split("\n")]
-us_state_names = [x.lower() for x in open("../data/us_states/state_names.txt").read().split("\n")]
+us_state_codes = [x.lower() for x in open(mapsd_data_dir + "/us_states/state_codes.txt").read().split("\n")]
+us_state_names = [x.lower() for x in open(mapsd_data_dir + "/us_states/state_names.txt").read().split("\n")]
 #load province codes for Canada provinces
-canada_province_codes = [x.lower() for x in open("../data/canada_provinces/province_codes.txt").read().split("\n")]
-canada_province_names = [x.lower() for x in open("../data/canada_provinces/province_names.txt").read().split("\n")]
+canada_province_codes = [x.lower() for x in open(mapsd_data_dir + "/canada_provinces/province_codes.txt").read().split("\n")]
+canada_province_names = [x.lower() for x in open(mapsd_data_dir + "/canada_provinces/province_names.txt").read().split("\n")]
 #load province codes for Australia provinces
-australia_province_codes = [x.lower() for x in open("../data/australia_provinces/province_codes.txt").read().split("\n")]
-australia_province_names = [x.lower() for x in open("../data/australia_provinces/province_names.txt").read().split("\n")]
+australia_province_codes = [x.lower() for x in open(mapsd_data_dir + "/australia_provinces/province_codes.txt").read().split("\n")]
+australia_province_names = [x.lower() for x in open(mapsd_data_dir + "/australia_provinces/province_names.txt").read().split("\n")]
 #load province codes for Brazil provinces
-brazil_province_codes = [x.lower() for x in open("../data/brazil_provinces/province_codes.txt").read().split("\n")]
-brazil_province_names = [x.lower() for x in open("../data/brazil_provinces/province_names.txt").read().split("\n")]
+brazil_province_codes = [x.lower() for x in open(mapsd_data_dir + "/brazil_provinces/province_codes.txt").read().split("\n")]
+brazil_province_names = [x.lower() for x in open(mapsd_data_dir + "/brazil_provinces/province_names.txt").read().split("\n")]
 #load province codes for China provinces
-china_province_codes = [x.lower() for x in open("../data/china_provinces/province_codes.txt").read().split("\n")]
-china_province_names = [x.lower() for x in open("../data/china_provinces/province_names.txt").read().split("\n")]
+china_province_codes = [x.lower() for x in open(mapsd_data_dir + "/china_provinces/province_codes.txt").read().split("\n")]
+china_province_names = [x.lower() for x in open(mapsd_data_dir + "/china_provinces/province_names.txt").read().split("\n")]
 #load province codes for Japan provinces
-japan_province_codes = [x.lower() for x in open("../data/japan_provinces/province_codes.txt").read().split("\n")]
-japan_province_names = [x.lower() for x in open("../data/japan_provinces/province_names.txt").read().split("\n")]
+japan_province_codes = [x.lower() for x in open(mapsd_data_dir + "/japan_provinces/province_codes.txt").read().split("\n")]
+japan_province_names = [x.lower() for x in open(mapsd_data_dir + "/japan_provinces/province_names.txt").read().split("\n")]
 #load province codes for Pakistan provinces
-pakistan_province_codes = [x.lower() for x in open("../data/pakistan_provinces/province_codes.txt").read().split("\n")]
-pakistan_province_names = [x.lower() for x in open("../data/pakistan_provinces/province_names.txt").read().split("\n")]
+pakistan_province_codes = [x.lower() for x in open(mapsd_data_dir + "/pakistan_provinces/province_codes.txt").read().split("\n")]
+pakistan_province_names = [x.lower() for x in open(mapsd_data_dir + "/pakistan_provinces/province_names.txt").read().split("\n")]
 #load province codes for India states
-india_state_codes = [x.lower() for x in open("../data/india_states/state_codes.txt").read().split("\n")]
-india_state_names = [x.lower() for x in open("../data/india_states/state_names.txt").read().split("\n")]
+india_state_codes = [x.lower() for x in open(mapsd_data_dir + "/india_states/state_codes.txt").read().split("\n")]
+india_state_names = [x.lower() for x in open(mapsd_data_dir + "/india_states/state_names.txt").read().split("\n")]
 #load province codes for Mexico states
-mexico_state_codes = [x.lower() for x in open("../data/mexico_states/state_codes.txt").read().split("\n")]
-mexico_state_names = [x.lower() for x in open("../data/mexico_states/state_names.txt").read().split("\n")]
+mexico_state_codes = [x.lower() for x in open(mapsd_data_dir + "/mexico_states/state_codes.txt").read().split("\n")]
+mexico_state_names = [x.lower() for x in open(mapsd_data_dir + "/mexico_states/state_names.txt").read().split("\n")]
 
 #add more city entries with US state names replaced with codes
 cities_to_add = []
@@ -234,7 +237,7 @@ for cc in actual_countrycodes:
 #mainly because largest cities are just mentioned without
 #country info because they are so large and famous
 largest_cities = {}
-with open("../data/cities_1000/cities2countries_1000.txt") as f:
+with open(mapsd_data_dir + "/cities_1000/cities2countries_1000.txt") as f:
 	for line in f:
 		line_split = line.strip().split(",")
 		large_city = line_split[0].strip().lower()
@@ -445,59 +448,43 @@ print (c, " countries out of ", len(countrywise.keys()), " entries identified")
 
 #print (list(final_data.keys()))
 total_commits = 0
-with open(out_file1, "w") as out_f1:
-	with open(out_file2, "w") as out_f2:
+with open(out_file_stats, "w") as out_f1:
 
-		out_f1.write("Code1 \t Code2 \t Name \t #Developers \t #Commits \t #Languages\n")
-		out_f2.write("Code1 \t Code2 \t Name \t Reponames;;Repodescs;;; \n")		
-		for country_code in final_data.keys():
-			#country_code = "PK"
-			country_data = final_data[country_code]
-			print (country_code)
-			print (country_data)
-			country_commits = []
-			country_langs = []
-			#country_reponames = []
-			#country_repodescs = []
-			country_reponamesdescs = []
-			for entry in country_data:
-				country_commits.extend(entry[0])
-				country_langs.extend([item for sublist in [x.split(",") for x in entry[1]] for item in sublist])
-				country_reponamesdescs.extend(entry[2])
-				#country_reponamesdescs.extend([x.split(",") for x in entry[2]])
-				#country_repodescs.extend([x.split(";;;") for x in entry[3]])
-				#print ("\n\n\n-----------------------------")
-				#print (entry)
-				#print (country_commits)
-				#print (country_langs)
-				#print (country_reponamesdescs)
-				#print (country_repodescs)
+	out_f1.write("Code1 \t Code2 \t Name \t #Developers \t #Commits \t #Languages\n")
 
-			total_commits+=len(country_commits)
+	for country_code in final_data.keys():
+		country_data = final_data[country_code]
+		country_commits = []
+		country_langs = []
+		country_reponamesdescs = []
+		for entry in country_data:
+			country_commits.extend(entry[0])
+			country_langs.extend([item for sublist in [x.split(",") for x in entry[1]] for item in sublist])
+			country_reponamesdescs.extend(entry[2])
 
-			country_commits = [int(x) for x in country_commits]
-			country_langs = Counter(country_langs).most_common()
+		total_commits+=len(country_commits)
 
-			if country_code.lower() == "ac": alpha3code = "ACIS"
-			elif country_code.lower() == "ic": alpha3code = "CAIS"
-			elif country_code.lower() == "ea": alpha3code = "CMEA"
-			elif country_code.lower() == "dg": alpha3code = "DGCA"
-			elif country_code.lower() == "xa": alpha3code = "FGXA"
-			elif country_code.lower() == "xb": alpha3code = "FGXB"
-			elif country_code.lower() == "ta": alpha3code = "TDCU"
-			elif country_code.lower() == '': continue
-			else: alpha3code = str(countries.get(country_code.lower()).alpha3)
+		country_commits = [int(x) for x in country_commits]
+		country_langs = Counter(country_langs).most_common()
 
-			out_f1.write(str(country_code) + "\t" + str(alpha3code) + "\t" + 
-					str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + 
-					str(len(country_commits)) + "\t" + str(sum(country_commits)) + "\t" + 
-					",".join([str(x) +":"+ str(y) for x,y in country_langs]) + "\n")
+		if country_code.lower() == "ac": alpha3code = "ACIS"
+		elif country_code.lower() == "ic": alpha3code = "CAIS"
+		elif country_code.lower() == "ea": alpha3code = "CMEA"
+		elif country_code.lower() == "dg": alpha3code = "DGCA"
+		elif country_code.lower() == "xa": alpha3code = "FGXA"
+		elif country_code.lower() == "xb": alpha3code = "FGXB"
+		elif country_code.lower() == "ta": alpha3code = "TDCU"
+		elif country_code.lower() == '': continue
+		else: alpha3code = str(countries.get(country_code.lower()).alpha3)
 
-			
-			out_f2.write(str(country_code) + "\t" + str(alpha3code) + "\t" +
-					str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + "<useraccount>" + 
-					"\t<useraccount>".join([str(x.strip()) for x in country_reponamesdescs]) + "\n")
+		out_f1.write(str(country_code) + "\t" + str(alpha3code) + "\t" + 
+				str(actual_countrynames_in_en[actual_countrycodes.index(country_code)]) + "\t" + 
+				str(len(country_commits)) + "\t" + str(sum(country_commits)) + "\t" + 
+				",".join([str(x) +":"+ str(y) for x,y in country_langs]) + "\n")
 
+		with open(os.path.join(out_dir, country_code), "w") as out_f2:
+			for tmp_reponds in country_reponamesdescs:
+				out_f2.write(tmp_reponds + "\n")
 
 print ("Total commits", total_commits)
 print ("Done in time:" , time.time()-start_time)
