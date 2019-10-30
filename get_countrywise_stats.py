@@ -19,7 +19,6 @@ mapsd_file = sys.argv[1] #where is user file
 mapsd_data_dir = sys.argv[2] #where is the data stored for mapsd project
 out_dir = os.path.join(sys.argv[3], os.path.basename(mapsd_file)[:-4]) #which dir to save output
 out_file_stats = os.path.join(out_dir, "countrywise_" + os.path.basename(mapsd_file))
-out_file2 = os.path.join(out_dir, "reponamesdescs_" + os.path.basename(mapsd_file))
 if os.path.exists(out_dir):
 	print ("Out dir already there. Check if this batch is done already. Or remove the dir and restart process")
 	exit()
