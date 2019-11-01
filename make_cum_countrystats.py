@@ -41,7 +41,6 @@ for fn in csv_files:
 			country_stats[country_code2][2] += country_devs
 			country_stats[country_code2][3] += country_commits
 			country_stats[country_code2][4] = combine_langs(country_langs, country_stats[country_code2][4])
-	print (country_stats["US"])
 
 
 with open(os.path.join(in_dir,"cum_stats.csv"), "w") as f:

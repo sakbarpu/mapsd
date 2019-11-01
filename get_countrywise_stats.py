@@ -15,6 +15,8 @@ from collections import Counter
 
 # COMMIT_FILTER = 1000
 
+print ("")
+
 mapsd_file = sys.argv[1] #where is user file
 mapsd_data_dir = sys.argv[2] #where is the data stored for mapsd project
 out_dir = os.path.join(sys.argv[3], os.path.basename(mapsd_file)[:-4]) #which dir to save output
@@ -74,14 +76,13 @@ actual_countrycodes_3letter["ACI"] = "AC"
 
 #load cities database ~25000 cities
 #(cityname,countryname,subcountryname)
-cities = [x.lower() for x in open("../world-cities/data/world-cities.csv").read().strip().split("\n")]
+cities = [x.lower() for x in open(mapsd_data_dir + "/world-cities/data/world-cities.csv").read().strip().split("\n")]
 cities = [x.split(",")[:-1] for x in cities[1:]]
 mapping_countries_incitiesdatabase_to_actual_codes = {}
 for city_entry in cities:
 	city_country = city_entry[1]
 	if city_country in actual_countrynames_in_en:
 		mapping_countries_incitiesdatabase_to_actual_codes[city_country] = actual_countrycodes[actual_countrynames_in_en.index(city_country)]
-
 
 #Example: (1) Vancouver, B.C. (2) Toronto, OR (3) Vancouver, BC (4) Burnaby, BC (5) Montreal, QC
 #People in Canada US and many other countries has a habit of abbreviating province/state names.
@@ -195,6 +196,7 @@ for city_ in cities_to_add: cities.append(city_)
 cities_to_add = []
 for city_ in cities:
 	country_name_tmp = city_[1]
+
 	if country_name_tmp == "antigua and barbuda": country_name_tmp = "antigua & barbuda"
 	if country_name_tmp == "aland islands": country_name_tmp = "Åland Islands".lower()
 	if country_name_tmp == "saint barthelemy": country_name_tmp = "St. Barthélemy".lower()
@@ -218,9 +220,14 @@ for city_ in cities:
 	if country_name_tmp == 'vatican': country_name_tmp = "Vatican City".lower()
 	if country_name_tmp == 'saint vincent and the grenadines': country_name_tmp = "St. Vincent & Grenadines".lower()
 	if country_name_tmp == 'wallis and futuna': country_name_tmp = "Wallis & Futuna".lower()
+
+	if country_name_tmp not in actual_countrynames_in_en: continue
+
+	mapping_countries_incitiesdatabase_to_actual_codes[country_name_tmp] = actual_countrycodes[actual_countrynames_in_en.index(country_name_tmp)]
 	country_code_tmp = actual_countrycodes[actual_countrynames_in_en.index(country_name_tmp)]
 	new_entry = [city_[0], city_[1], country_code_tmp]
 	cities_to_add.append(new_entry)
+
 for city_ in cities_to_add: cities.append(city_)
 
 #loop over extracted country names to try to identify them
@@ -301,7 +308,7 @@ for x in countrywise.keys():
 			# Example: (1) Toronto, Canada (2) Germany (3) Sofia, Bulgaria (4) wuhan,china (5) NOIDA, INDIA
 			if n in actual_countrynames_in_en: #if name found in english list of country names
 				c+=1 
-				if actual_countrycodes[actual_countrynames_in_en.index(n)] == "AL": print (x)
+				#if actual_countrycodes[actual_countrynames_in_en.index(n)] == "AL": print (x)
 				final_data[actual_countrycodes[actual_countrynames_in_en.index(n)]].append(countrywise[x])
 				success = True
 				break
@@ -309,7 +316,7 @@ for x in countrywise.keys():
 				for lang, cns in actual_countrynames_diff_langs.items(): #search for the name in all other languages country names
 					if n in cns:
 						c+=1
-						if actual_countrycodes[cns.index(n)] == "AL": print (x)
+						#if actual_countrycodes[cns.index(n)] == "AL": print (x)
 						final_data[actual_countrycodes[cns.index(n)]].append(countrywise[x])
 						success = True
 						break
@@ -329,6 +336,31 @@ for x in countrywise.keys():
 		if len(x_split) > 1:
 			x_split = [x.strip().lower() for x in x_split]
 			for city_entry in cities:
+
+				if city_entry[1] == "antigua and barbuda": city_entry[1] = "antigua & barbuda"
+				if city_entry[1] == "aland islands": city_entry[1] = "Åland Islands".lower()
+				if city_entry[1] == "saint barthelemy": city_entry[1] = "St. Barthélemy".lower()
+				if city_entry[1] == "democratic republic of the congo": city_entry[1] = "Congo - Kinshasa".lower()
+				if city_entry[1] == "republic of the congo": city_entry[1] = "Congo - Brazzaville".lower()
+				if city_entry[1] == "ivory coast": city_entry[1] = "Côte d’Ivoire".lower()
+				if city_entry[1] == "cabo verde": city_entry[1] = "cape verde".lower()
+				if city_entry[1] == "curacao": city_entry[1] = "Curaçao".lower()
+				if city_entry[1] == "hong kong": city_entry[1] = "Hong Kong SAR China".lower()
+				if city_entry[1] == "macao": city_entry[1] = "Macao SAR China".lower()
+				if city_entry[1] == "saint kitts and nevis": city_entry[1] = "St. Kitts & Nevis".lower()
+				if city_entry[1] == "saint lucia": city_entry[1] = "St. Lucia".lower()
+				if city_entry[1] == "saint martin": city_entry[1] = "St. Martin".lower()
+				if city_entry[1] == "saint helena": city_entry[1] = "St. Helena".lower()
+				if city_entry[1] == "svalbard and jan mayen":city_entry[1] = "Svalbard & Jan Mayen".lower()
+				if city_entry[1] == "saint pierre and miquelon":city_entry[1] = "St. Pierre & Miquelon".lower()
+				if city_entry[1] == "reunion":city_entry[1] = "Réunion".lower()
+				if city_entry[1] == "turks and caicos islands":city_entry[1] = "Turks & Caicos Islands".lower()
+				if city_entry[1] == "trinidad and tobago":city_entry[1] = "Trinidad & Tobago".lower()
+				if city_entry[1] == ' d.c."': city_entry[1] = "United States".lower()
+				if city_entry[1] == 'vatican': city_entry[1] = "Vatican City".lower()
+				if city_entry[1] == 'saint vincent and the grenadines': city_entry[1] = "St. Vincent & Grenadines".lower()
+				if city_entry[1] == 'wallis and futuna': city_entry[1] = "Wallis & Futuna".lower()
+
 				count_match = 0
 				for a1 in x_split: 
 					for a2 in city_entry: 
@@ -337,6 +369,18 @@ for x in countrywise.keys():
 				#The entries much match in at least two locations	
 				if count_match >= 2:
 					c+=1
+					if city_entry[1] not in mapping_countries_incitiesdatabase_to_actual_codes: print (city_entry[1])
+					try:
+						final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]].append(countrywise[x])
+					except:
+						print ("Error")
+						print (city_entry[1])
+						print (mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]])
+						print (final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]])
+						print (x)
+						print (countrywise[x])
+						exit()
+
 					final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]].append(countrywise[x])
 					success = True
 					break
@@ -365,6 +409,31 @@ for x in countrywise.keys():
 		if len(y_split) > 1:
 			y_split = [y.strip().lower() for y in y_split]
 			for city_entry in cities:
+
+				if city_entry[1] == "antigua and barbuda": city_entry[1] = "antigua & barbuda"
+				if city_entry[1] == "aland islands": city_entry[1] = "Åland Islands".lower()
+				if city_entry[1] == "saint barthelemy": city_entry[1] = "St. Barthélemy".lower()
+				if city_entry[1] == "democratic republic of the congo": city_entry[1] = "Congo - Kinshasa".lower()
+				if city_entry[1] == "republic of the congo": city_entry[1] = "Congo - Brazzaville".lower()
+				if city_entry[1] == "ivory coast": city_entry[1] = "Côte d’Ivoire".lower()
+				if city_entry[1] == "cabo verde": city_entry[1] = "cape verde".lower()
+				if city_entry[1] == "curacao": city_entry[1] = "Curaçao".lower()
+				if city_entry[1] == "hong kong": city_entry[1] = "Hong Kong SAR China".lower()
+				if city_entry[1] == "macao": city_entry[1] = "Macao SAR China".lower()
+				if city_entry[1] == "saint kitts and nevis": city_entry[1] = "St. Kitts & Nevis".lower()
+				if city_entry[1] == "saint lucia": city_entry[1] = "St. Lucia".lower()
+				if city_entry[1] == "saint martin": city_entry[1] = "St. Martin".lower()
+				if city_entry[1] == "saint helena": city_entry[1] = "St. Helena".lower()
+				if city_entry[1] == "svalbard and jan mayen":city_entry[1] = "Svalbard & Jan Mayen".lower()
+				if city_entry[1] == "saint pierre and miquelon":city_entry[1] = "St. Pierre & Miquelon".lower()
+				if city_entry[1] == "reunion":city_entry[1] = "Réunion".lower()
+				if city_entry[1] == "turks and caicos islands":city_entry[1] = "Turks & Caicos Islands".lower()
+				if city_entry[1] == "trinidad and tobago":city_entry[1] = "Trinidad & Tobago".lower()
+				if city_entry[1] == ' d.c."': city_entry[1] = "United States".lower()
+				if city_entry[1] == 'vatican': city_entry[1] = "Vatican City".lower()
+				if city_entry[1] == 'saint vincent and the grenadines': city_entry[1] = "St. Vincent & Grenadines".lower()
+				if city_entry[1] == 'wallis and futuna': city_entry[1] = "Wallis & Futuna".lower()
+
 				count_match = 0
 				for a1 in y_split: 
 					for a2 in city_entry: 
@@ -374,6 +443,16 @@ for x in countrywise.keys():
 				if count_match >= 2:
 					c+=1
 					#print (mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]],y_split)
+					try:
+						final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]].append(countrywise[x])
+					except:
+						print ("Error")
+						print (city_entry[1])
+						print (mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]])
+						print (final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]])
+						print (x)
+						print (countrywise[x])
+						exit()
 					final_data[mapping_countries_incitiesdatabase_to_actual_codes[city_entry[1]]].append(countrywise[x])
 					success = True
 					break
