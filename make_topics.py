@@ -126,7 +126,7 @@ print('Number of documents: %d' % len(corpus))
 # Train LDA model.
 
 # Set training parameters.
-num_topics = 10
+num_topics = 50
 chunksize = 2000
 passes = 20
 iterations = 100
@@ -160,6 +160,7 @@ numpy.save(os.path.join(out_path, "topics.npy"), top_topics)
 
 #predict a topic for a document
 important_words = docs[2]
+print (important_words)
 print (len(important_words))
 
 ques_vec = []

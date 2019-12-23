@@ -32,10 +32,12 @@ mapsd = open(mapsd_file) #mapsd file to read
 start_time = time.time() #time
 countrywise = {}
 for m in mapsd: #loop over all the users in the file
-	counter += 1
 	m_split = m.split(" ;;; ")
 	country = m_split[3]
 	commits = m_split[2]
+	if int(commits) <= 20 and int(commits) >= 100000:
+		continue
+	counter += 1
 	langs = m_split[4]
 	reponames = m_split[5]
 	repodescs = m_split[6]
