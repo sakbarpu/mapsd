@@ -3,13 +3,14 @@ import pandas as pd
 import sys
 
 df = pd.read_csv(sys.argv[1], sep="\t")
-if sys.argv[2] == "commits": to_plot = "#Commits"
-elif sys.argv[2] == "developers": to_plot = "#Developers"
+if sys.argv[2] == "commits": to_plot = " #Commits "
+elif sys.argv[2] == "developers": to_plot = " #Developers "
+print (df.columns)
 
 fig = go.Figure(data=go.Choropleth(
-    locations = df['Code2'],
+    locations = df[' Code2 '],
     z = df[to_plot],
-    text = df['Name'],
+    text = df[' Name '],
     colorscale = 'Reds',
     autocolorscale=False,
     reversescale=False,
