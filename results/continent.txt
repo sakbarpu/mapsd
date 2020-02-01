@@ -1,0 +1,262 @@
+Asia	AS	AFG
+Europe	EU	ALB
+Antarctica	AN	ATA
+Africa	AF	DZA
+Oceania	OC	ASM
+Europe	EU	AND
+Africa	AF	AGO
+North America	NA	ATG
+Europe	EU	AZE
+Asia	AS	AZE
+South America	SA	ARG
+Oceania	OC	AUS
+Europe	EU	AUT
+North America	NA	BHS
+Asia	AS	BHR
+Asia	AS	BGD
+Europe	EU	ARM
+Asia	AS	ARM
+North America	NA	BRB
+Europe	EU	BEL
+North America	NA	BMU
+Asia	AS	BTN
+South America	SA	BOL
+Europe	EU	BIH
+Africa	AF	BWA
+Antarctica	AN	BVT
+South America	SA	BRA
+North America	NA	BLZ
+Asia	AS	IOT
+Oceania	OC	SLB
+North America	NA	VGB
+Asia	AS	BRN
+Europe	EU	BGR
+Asia	AS	MMR
+Africa	AF	BDI
+Europe	EU	BLR
+Asia	AS	KHM
+Africa	AF	CMR
+North America	NA	CAN
+Africa	AF	CPV
+North America	NA	CYM
+Africa	AF	CAF
+Asia	AS	LKA
+Africa	AF	TCD
+South America	SA	CHL
+Asia	AS	CHN
+Asia	AS	TWN
+Asia	AS	CXR
+Asia	AS	CCK
+South America	SA	COL
+Africa	AF	COM
+Africa	AF	MYT
+Africa	AF	COG
+Africa	AF	COD
+Oceania	OC	COK
+North America	NA	CRI
+Europe	EU	HRV
+North America	NA	CUB
+Europe	EU	CYP
+Asia	AS	CYP
+Europe	EU	CZE
+Africa	AF	BEN
+Europe	EU	DNK
+North America	NA	DMA
+North America	NA	DOM
+South America	SA	ECU
+North America	NA	SLV
+Africa	AF	GNQ
+Africa	AF	ETH
+Africa	AF	ERI
+Europe	EU	EST
+Europe	EU	FRO
+South America	SA	FLK
+Antarctica	AN	SGS
+Oceania	OC	FJI
+Europe	EU	FIN
+Europe	EU	ALA
+Europe	EU	FRA
+South America	SA	GUF
+Oceania	OC	PYF
+Antarctica	AN	ATF
+Africa	AF	DJI
+Africa	AF	GAB
+Europe	EU	GEO
+Asia	AS	GEO
+Africa	AF	GMB
+Asia	AS	PSE
+Europe	EU	DEU
+Africa	AF	GHA
+Europe	EU	GIB
+Oceania	OC	KIR
+Europe	EU	GRC
+North America	NA	GRL
+North America	NA	GRD
+North America	NA	GLP
+Oceania	OC	GUM
+North America	NA	GTM
+Africa	AF	GIN
+South America	SA	GUY
+North America	NA	HTI
+Antarctica	AN	HMD
+Europe	EU	VAT
+North America	NA	HND
+Asia	AS	HKG
+Europe	EU	HUN
+Europe	EU	ISL
+Asia	AS	IND
+Asia	AS	IDN
+Asia	AS	IRN
+Asia	AS	IRQ
+Europe	EU	IRL
+Asia	AS	ISR
+Europe	EU	ITA
+Africa	AF	CIV
+North America	NA	JAM
+Asia	AS	JPN
+Europe	EU	KAZ
+Asia	AS	KAZ
+Asia	AS	JOR
+Africa	AF	KEN
+Asia	AS	PRK
+Asia	AS	KOR
+Asia	AS	KWT
+Asia	AS	KGZ
+Asia	AS	LAO
+Asia	AS	LBN
+Africa	AF	LSO
+Europe	EU	LVA
+Africa	AF	LBR
+Africa	AF	LBY
+Europe	EU	LIE
+Europe	EU	LTU
+Europe	EU	LUX
+Asia	AS	MAC
+Africa	AF	MDG
+Africa	AF	MWI
+Asia	AS	MYS
+Asia	AS	MDV
+Africa	AF	MLI
+Europe	EU	MLT
+North America	NA	MTQ
+Africa	AF	MRT
+Africa	AF	MUS
+North America	NA	MEX
+Europe	EU	MCO
+Asia	AS	MNG
+Europe	EU	MDA
+Europe	EU	MNE
+North America	NA	MSR
+Africa	AF	MAR
+Africa	AF	MOZ
+Asia	AS	OMN
+Africa	AF	NAM
+Oceania	OC	NRU
+Asia	AS	NPL
+Europe	EU	NLD
+North America	NA	ANT
+North America	NA	CUW
+North America	NA	ABW
+North America	NA	SXM
+North America	NA	BES
+Oceania	OC	NCL
+Oceania	OC	VUT
+Oceania	OC	NZL
+North America	NA	NIC
+Africa	AF	NER
+Africa	AF	NGA
+Oceania	OC	NIU
+Oceania	OC	NFK
+Europe	EU	NOR
+Oceania	OC	MNP
+Oceania	OC	UMI
+North America	NA	UMI
+Oceania	OC	FSM
+Oceania	OC	MHL
+Oceania	OC	PLW
+Asia	AS	PAK
+North America	NA	PAN
+Oceania	OC	PNG
+South America	SA	PRY
+South America	SA	PER
+Asia	AS	PHL
+Oceania	OC	PCN
+Europe	EU	POL
+Europe	EU	PRT
+Africa	AF	GNB
+Asia	AS	TLS
+North America	NA	PRI
+Asia	AS	QAT
+Africa	AF	REU
+Europe	EU	ROU
+Europe	EU	RUS
+Asia	AS	RUS
+Africa	AF	RWA
+North America	NA	BLM
+Africa	AF	SHN
+North America	NA	KNA
+North America	NA	AIA
+North America	NA	LCA
+North America	NA	MAF
+North America	NA	SPM
+North America	NA	VCT
+Europe	EU	SMR
+Africa	AF	STP
+Asia	AS	SAU
+Africa	AF	SEN
+Europe	EU	SRB
+Africa	AF	SYC
+Africa	AF	SLE
+Asia	AS	SGP
+Europe	EU	SVK
+Asia	AS	VNM
+Europe	EU	SVN
+Africa	AF	SOM
+Africa	AF	ZAF
+Africa	AF	ZWE
+Europe	EU	ESP
+Africa	AF	SSD
+Africa	AF	ESH
+Africa	AF	SDN
+South America	SA	SUR
+Europe	EU	SJM
+Africa	AF	SWZ
+Europe	EU	SWE
+Europe	EU	CHE
+Asia	AS	SYR
+Asia	AS	TJK
+Asia	AS	THA
+Africa	AF	TGO
+Oceania	OC	TKL
+Oceania	OC	TON
+North America	NA	TTO
+Asia	AS	ARE
+Africa	AF	TUN
+Europe	EU	TUR
+Asia	AS	TUR
+Asia	AS	TKM
+North America	NA	TCA
+Oceania	OC	TUV
+Africa	AF	UGA
+Europe	EU	UKR
+Europe	EU	MKD
+Africa	AF	EGY
+Europe	EU	GBR
+Europe	EU	GGY
+Europe	EU	JEY
+Europe	EU	IMN
+Africa	AF	TZA
+North America	NA	USA
+North America	NA	VIR
+Africa	AF	BFA
+South America	SA	URY
+Asia	AS	UZB
+South America	SA	VEN
+Oceania	OC	WLF
+Oceania	OC	WSM
+Asia	AS	YEM
+Africa	AF	ZMB
+Oceania	OC	
+Asia	AS	
+Asia	AS	
+Asia	AS	

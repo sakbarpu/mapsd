@@ -1,0 +1,36 @@
+Out of 10000000 (10 million) developers active on GitHub
+during the year 2018, about 25% of them have made their
+"location" publicly available on their profile.
+Total number of developers in dataset: 2407950 (~2.5 million)
+Total number of times they interacted with GitHub: 319207425
+(~300 million)
+
+Top programming languages in order: 
+JavaScript, Python, Java
+
+Top countries with most number of developers in order: 
+US, China, India
+
+Ukraine is ranked 11 in most number of developers.
+
+There are around 150 developers doing open-source
+contributions from Antarctica.
+
+Bots are there (found while exploration of data). They have
+names ending in "[bot]" and have the most traffic (commits)
+for GitHub. We don't include them in our dataset. One such
+bot is greenkeeper[bot]. They come and go.
+
+20 to 100000 commits make sense (again exploratory study).
+
+Filtering for more than 20 and less than 100000 commits
+makes sense. Manually analyzed few accounts less than 20 and
+they all look newbies. 
+
+Most accounts on github are either bots or newbies. Few are
+"experts" having large but reasonable number of commits.
+
+Histogram shows that most users are within 1000 commits.
+very few are "experts" and have more than 1000 commits. 
+
+

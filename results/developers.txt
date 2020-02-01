@@ -1,0 +1,257 @@
+Code2	Name	#Developers
+ACIS	ascension island	6
+AND	andorra	69
+ARE	united arab emirates	28735
+AFG	afghanistan	328
+ATG	antigua & barbuda	2
+AIA	anguilla	2
+ALB	albania	497
+ARM	armenia	1510
+AGO	angola	233
+ATA	antarctica	169
+ARG	argentina	17397
+ASM	american samoa	7
+AUT	austria	9905
+AUS	australia	42953
+ABW	aruba	22
+ALA	åland islands	17
+AZE	azerbaijan	831
+BIH	bosnia and herzegovina	10290
+BRB	barbados	115
+BGD	bangladesh	13849
+BEL	belgium	12833
+BFA	burkina faso	79
+BGR	bulgaria	7982
+BHR	bahrain	248
+BDI	burundi	97
+BEN	benin	119
+BLM	st. barthélemy	15
+BMU	bermuda	86
+BRN	brunei	913
+BOL	bolivia	3753
+BES	caribbean netherlands	47
+BRA	brazil	90037
+BHS	bahamas	111
+BTN	bhutan	73
+BWA	botswana	3747
+BLR	belarus	10527
+BLZ	belize	62
+CAN	canada	95851
+CCK	cocos islands	57
+COD	congo - kinshasa	4079
+CAF	central african republic	666
+COG	congo - brazzaville	28
+CHE	switzerland	16768
+CIV	côte d’ivoire	283
+COK	cook islands	23
+CHL	chile	9006
+CMR	cameroon	651
+CHN	china	176872
+COL	colombia	13716
+CRI	costa rica	3314
+CUB	cuba	579
+CPV	cape verde	273
+CUW	curaçao	31
+CXR	christmas island	3767
+CYP	cyprus	854
+CZE	czechia	775
+Code2	Name	0
+DEU	germany	92459
+DGCA	diego garcia	137
+DJI	djibouti	9
+DNK	denmark	12396
+DMA	dominica	17
+DOM	dominican republic	1414
+DZA	algeria	1619
+CMEA	ceuta & melilla	0
+ECU	ecuador	4207
+EST	estonia	3020
+EGY	egypt	10065
+ESH	western sahara	30
+ERI	eritrea	9
+ESP	spain	25640
+ETH	ethiopia	626
+FIN	finland	12368
+FJI	fiji	51
+FLK	falkland islands	283
+FSM	micronesia	457
+FRO	faroe islands	146
+FRA	france	56310
+GAB	gabon	99
+GBR	united kingdom	52465
+GRD	grenada	24
+GEO	georgia	3531
+GUF	french guiana	313
+GGY	guernsey	59
+GHA	ghana	1662
+GIB	gibraltar	7002
+GRL	greenland	31
+GMB	gambia	40
+GIN	guinea	194
+GLP	guadeloupe	75
+GNQ	equatorial guinea	2
+GRC	greece	7970
+SGS	south georgia & south sandwich islands	28
+GTM	guatemala	2177
+GUM	guam	225
+GNB	guinea-bissau	3
+GUY	guyana	69
+HKG	hong kong sar china	28
+HND	honduras	602
+HRV	croatia	3484
+HTI	haiti	133
+HUN	hungary	6761
+CAIS	canary islands	202
+IDN	indonesia	22917
+IRL	ireland	11085
+ISR	israel	9578
+IMN	isle of man	147
+IND	india	116026
+IOT	british indian ocean territory	1234
+IRQ	iraq	591
+IRN	iran	7493
+ISL	iceland	1156
+ITA	italy	21346
+JEY	jersey	133
+JAM	jamaica	917
+JOR	jordan	1184
+JPN	japan	43954
+KEN	kenya	5914
+KGZ	kyrgyzstan	606
+KHM	cambodia	935
+KIR	kiribati	22
+COM	comoros	53
+KNA	st. kitts & nevis	71
+PRK	north korea	97
+KOR	south korea	27289
+KWT	kuwait	573
+CYM	cayman islands	232
+KAZ	kazakhstan	2045
+LAO	laos	487
+LBN	lebanon	873
+LCA	st. lucia	156
+LIE	liechtenstein	91
+LKA	sri lanka	3887
+LBR	liberia	78
+LSO	lesotho	36
+LTU	lithuania	3465
+LUX	luxembourg	1526
+LVA	latvia	2260
+LBY	libya	192
+MAR	morocco	2308
+MCO	monaco	815
+MDA	moldova	997
+MNE	montenegro	389
+MAF	st. martin	13
+MDG	madagascar	411
+MHL	marshall islands	73
+MKD	north macedonia	159
+MLI	mali	127
+MMR	myanmar	981
+MNG	mongolia	424
+MAC	macao sar china	46
+MNP	northern mariana islands	12
+MTQ	martinique	63
+MRT	mauritania	17
+MSR	montserrat	8
+MLT	malta	828
+MUS	mauritius	495
+MDV	maldives	191
+MWI	malawi	147
+MEX	mexico	17034
+MYS	malaysia	5395
+MOZ	mozambique	234
+NAM	namibia	1997
+NCL	new caledonia	76
+NER	niger	73
+NFK	norfolk island	72
+NGA	nigeria	10666
+NIC	nicaragua	978
+NLD	netherlands	22381
+NOR	norway	12963
+NPL	nepal	3739
+NRU	nauru	4375
+NIU	niue	215
+NZL	new zealand	12461
+OMN	oman	254
+PAN	panama	834
+PER	peru	3994
+PYF	french polynesia	981
+PNG	papua new guinea	96
+PHL	philippines	9092
+PAK	pakistan	10625
+POL	poland	30435
+SPM	st. pierre & miquelon	394
+PCN	pitcairn	264
+PRI	puerto rico	4234
+PSE	palestinian territory	51
+PRT	portugal	15084
+PLW	palau	77
+PRY	paraguay	1096
+QAT	qatar	338
+REU	réunion	146
+ROU	romania	7980
+SRB	serbia	5182
+RUS	russia	53872
+RWA	rwanda	667
+SAU	saudi arabia	1835
+SLB	solomon islands	17
+SYC	seychelles	41
+SDN	sudan	341
+SWE	sweden	24967
+SGP	singapore	14933
+SHN	st. helena	50
+SVN	slovenia	2278
+SJM	svalbard & jan mayen	8
+SVK	slovakia	2881
+SLE	sierra leone	241
+SMR	san marino	179
+SEN	senegal	408
+SOM	somalia	69
+SUR	suriname	72
+SSD	south sudan	34
+STP	são tomé & príncipe	237
+SLV	el salvador	1130
+SXM	sint maarten	20
+SYR	syria	452
+SWZ	eswatini	8
+TDCU	tristan da cunha	121
+TCA	turks & caicos islands	198
+TCD	chad	416
+ATF	french southern territories	33
+TGO	togo	96
+THA	thailand	7810
+TJK	tajikistan	508
+TKL	tokelau	8
+TLS	timor leste	15
+TKM	turkmenistan	89
+TUN	tunisia	1914
+TON	tonga	8
+TUR	turkey	14530
+TTO	trinidad & tobago	84
+TUV	tuvalu	57
+TWN	taiwan	16883
+TZA	tanzania	672
+UKR	ukraine	47954
+UGA	uganda	1438
+UMI	u.s. outlying islands	755
+USA	united states	799384
+URY	uruguay	4705
+UZB	uzbekistan	776
+VAT	vatican city	1400
+VCT	st. vincent & grenadines	7
+VEN	venezuela	4636
+VGB	british virgin islands	20
+VIR	u.s. virgin islands	70
+VNM	vietnam	9564
+VUT	vanuatu	41
+WLF	wallis & futuna	0
+WSM	samoa	81
+FGXA	pseudo-accents	2191
+FGXB	pseudo-bidi	15
+XKX	kosovo	270
+YEM	yemen	1937
+MYT	mayotte	560
+ZAF	south africa	8435
+ZMB	zambia	274
+ZWE	zimbabwe	585
