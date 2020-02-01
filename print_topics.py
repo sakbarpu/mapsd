@@ -6,6 +6,7 @@ from preprocessor import Preprocessor
 import gensim
 from gensim.models import Phrases
 from gensim.corpora import Dictionary
+from gensim.models import LdaModel
 from gensim.models import LdaMulticore
 
 from nltk.tokenize import RegexpTokenizer
@@ -101,57 +102,69 @@ eval_every = None  # Don't evaluate model perplexity, takes too much time.
 temp = dictionary[0]  # This is only to "load" the dictionary.
 id2word = dictionary.id2token
 
-model = LdaMulticore(
-	corpus=corpus,
-	id2word=id2word,
-	chunksize=chunksize,
-	alpha=0.05,
-	eta=0.01,
-	iterations=iterations,
-	num_topics=num_topics,
-	passes=passes,
-	eval_every=eval_every,
-	workers=4
-)
+model = LdaModel.load("/home/ubuntu/mnt/cloudNAS2/SoftKBase/mapsd/data/topics/preprocessed_data/preprocessed_data/lda_RANDOM_DOCS_model/lda_model")
 
-top_topics = model.top_topics(corpus) #, num_words=20)
+#top_topics = model.top_topics(corpus) #, num_words=20)
 
 # Average topic coherence is the sum of topic coherences of all topics, divided by the number of topics.
-avg_topic_coherence = sum([t[1] for t in top_topics]) / num_topics
-print('Average topic coherence: %.4f.' % avg_topic_coherence)
+#avg_topic_coherence = sum([t[1] for t in top_topics]) / num_topics
+#print('Average topic coherence: %.4f.' % avg_topic_coherence)
 
-pprint(top_topics)
-print (top_topics)
-numpy.save(os.path.join(out_path, "topics.npy"), top_topics)
-model.save(os.path.join(out_path, "lda_model"))
+#pprint(top_topics)
+#print (top_topics)
 
-#predict a topic for a document
-important_words = docs[2]
-print (important_words)
-print (len(important_words))
+def get_doc_topics(lda, bow):
+	gamma, _ = lda.inference([bow])
+	topic_dist = gamma[0] / sum(gamma[0])  # normalize distribution
+	return [(topicid, topicvalue) for topicid, topicvalue in enumerate(topic_dist)]
 
-ques_vec = []
-ques_vec = dictionary.doc2bow(important_words)
-print ("ques_vec", ques_vec)
+def get_top_topics_only(topic_dist):
+	top_topics = []
+	count = 0
+	max_topic = ("",float("-inf"))
+	for topic,value in topic_dist:
+		if value > max_topic[1]:
+			max_topic = (topic,value)
+	return max_topic
 
-topic_vec = []
-topic_vec = model[ques_vec]
-print ("topic_vec", topic_vec)
+topics_all_docs = []
+with open(os.path.join(out_path,"all_docs_topics.txt"),'w') as f:
+	for i in range(len(docs)):
+		if i%1000 == 0: print (i,'/',len(docs))
+		#print ("\n")
+		#predict a topic for a document
+		important_words = docs[i]
+		#print (important_words)
+		#print (len(important_words))
 
-word_count_array = numpy.empty((len(topic_vec), 2), dtype = numpy.object)
-for i in range(len(topic_vec)):
-	word_count_array[i, 0] = topic_vec[i][0]
-	word_count_array[i, 1] = topic_vec[i][1]
+		ques_vec = []
+		ques_vec = dictionary.doc2bow(important_words)
+		#print ("ques_vec", ques_vec)
+		
+		t,v = get_top_topics_only(get_doc_topics(model,ques_vec))
+		#topics_all_docs.append((t,v))
 
-print ("word count array")
-print (word_count_array)
+		#topic_vec = []
+		#topic_vec = model[ques_vec]
+		#print ("topic_vec", topic_vec)
+		
 
-idx = numpy.argsort(word_count_array[:, 1])
-idx = idx[::-1]
-word_count_array = word_count_array[idx]
+		#word_count_array = numpy.empty((len(topic_vec), 2), dtype = numpy.object)
+		#for i in range(len(topic_vec)):
+		#	word_count_array[i, 0] = topic_vec[i][0]
+		#	word_count_array[i, 1] = topic_vec[i][1]
 
-final = []
-final = model.print_topic(word_count_array[0, 0], 5)
+		#print ("word count array")
+		#print (word_count_array)
 
-question_topic = final.split('*') ## as format is like "probability * topic"
-print (question_topic)
+		#idx = numpy.argsort(word_count_array[:, 1])
+		#idx = idx[::-1]
+		#word_count_array = word_count_array[idx]
+
+		#final = []
+		#final = model.print_topic(word_count_array[0, 0], 10)
+
+		#question_topic = final.split('*') ## as format is like "probability * topic"
+		#print (question_topic)
+		f.write(str(t) + " " + str(v) + "\n")
+
